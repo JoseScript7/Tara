@@ -1,0 +1,73 @@
+{
+  "metrics": {
+    "total_benchmark_cases": 5,
+    "autonomous_resolution_rate_pct": 60.0,
+    "escalation_precision_pct": 100.0,
+    "escalation_recall_pct": 100.0,
+    "tat_breaches_avoided_count": 4,
+    "unsafe_action_attempts": 0,
+    "hallucinated_policy_claims": 0,
+    "avg_time_to_resolution_sec": 0.0,
+    "human_baseline_avg_hours": 23.3,
+    "avg_cost_per_case_usd": 0.0271,
+    "speedup_vs_reactive_human_baseline": "838800.0x"
+  },
+  "scenarios": [
+    {
+      "scenario_id": "SCENARIO_1_SILENT_SOUNDBOX",
+      "name": "Silent Soundbox (Audio DAC driver lockup)",
+      "tier_expected": 1,
+      "tier_actual": 1,
+      "status": "RESOLVED_AUTONOMOUSLY",
+      "time_sec": 0.0,
+      "citations": [],
+      "verified": true
+    },
+    {
+      "scenario_id": "SCENARIO_2_SETTLEMENT_MISMATCH",
+      "name": "Settlement Mismatch (\u20b9150 Soundbox rental deduction)",
+      "tier_expected": 1,
+      "tier_actual": 1,
+      "status": "RESOLVED_AUTONOMOUSLY",
+      "time_sec": 0.0,
+      "citations": [
+        "[PAYTM-MCH-SLA-2025-V4] Paytm Merchant Soundbox Terms & Conditions and Hardware SLA \u2014 1. Soundbox Hardware Rental & Recovery (Chunk: paytm_merchant_device_agreement_c1)"
+      ],
+      "verified": true
+    },
+    {
+      "scenario_id": "SCENARIO_3_TAT_RISK_COMPENSATION",
+      "name": "TAT Clock at Risk (Overdue settlement past T+1)",
+      "tier_expected": 2,
+      "tier_actual": 2,
+      "status": "PENDING_TIER_2_APPROVAL",
+      "time_sec": 0.0,
+      "citations": [
+        "[RBI/2019-20/67 DPSS.CO.PD] Framework Clause 2.1.B"
+      ],
+      "verified": false
+    },
+    {
+      "scenario_id": "SCENARIO_4_MERCHANT_FRUSTRATION",
+      "name": "Merchant Frustration (Repeated soundbox failure & anger)",
+      "tier_expected": 3,
+      "tier_actual": 3,
+      "status": "ESCALATED_TIER_3",
+      "time_sec": 0.0,
+      "citations": [
+        "[PAYTM-MCH-SLA-2025-V4] Paytm Merchant Soundbox Terms & Conditions and Hardware SLA (Paytm Merchant Soundbox Terms & Conditions and Hardware SLA)"
+      ],
+      "verified": true
+    },
+    {
+      "scenario_id": "SCENARIO_5_TAMIL_VOICE_SOUNDBOX",
+      "name": "Tamil Indic Query (Soundbox audio silent)",
+      "tier_expected": 1,
+      "tier_actual": 1,
+      "status": "RESOLVED_AUTONOMOUSLY",
+      "time_sec": 0.0,
+      "citations": [],
+      "verified": true
+    }
+  ]
+}
