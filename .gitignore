@@ -1,5 +1,7 @@
 node_modules/
 dist/
+venv/
+.venv/
 .env
 .env.*
 !.env.example
@@ -8,12 +10,16 @@ __pycache__/
 *$py.class
 *.log
 *.sqlite3
+*.db
+*.db-*
+audit_records/
+python-backend/.env
 .pytest_cache/
 .coverage
 htmlcov/
 frontend/test-results/
 frontend/pw_out*.txt
-backend/logs/
+logs/
 .terraform/
 *.tfstate*
 .DS_Store
