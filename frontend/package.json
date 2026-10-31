@@ -1,0 +1,50 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node design-system/contrast-checker.js && node scripts/check-external-assets.mjs && tsc -b && vite build",
+    "build:assets": "node scripts/asset-pipeline.mjs",
+    "check-contrast": "node design-system/contrast-checker.js",
+    "check-assets": "node scripts/check-external-assets.mjs",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@types/three": "^0.186.0",
+    "date-fns": "^4.4.0",
+    "jspdf": "^4.2.1",
+    "lucide-react": "^1.46.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-hot-toast": "^2.6.1",
+    "react-router-dom": "^7.18.4",
+    "recharts": "^3.10.1",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "eslint": "^10.10.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "ffmpeg-static": "^5.3.0",
+    "globals": "^17.12.0",
+    "oxlint": "^1.81.0",
+    "prettier": "^3.9.7",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.70.0",
+    "vite": "^8.3.0"
+  }
+}
