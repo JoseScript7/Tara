@@ -1,0 +1,852 @@
+[
+  {
+    "settlement_id": "SETTLE_18789A3C",
+    "merchant_id": "M_KIRANA_042",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 26433.89,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 26433.89,
+    "utr": "PAYTMUTR6274581579",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_DA8837E9",
+    "merchant_id": "M_CAFE_017",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 13026.14,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 150.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 150.0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 12876.14,
+    "utr": "PAYTMUTR9923212389",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_9F80F3D2",
+    "merchant_id": "M_PHARM_009",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 10977.3,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 10977.3,
+    "utr": "PAYTMUTR4389106724",
+    "status": "DELAYED_T1_BREACH",
+    "tat_hours": 36.5,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_82F97A8E",
+    "merchant_id": "M_CLINIC_003",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 37542.07,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 37542.07,
+    "utr": "PAYTMUTR7001009648",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_73E8F355",
+    "merchant_id": "M_KIRANA_105",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 47666.34,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 47666.34,
+    "utr": "PAYTMUTR6548726697",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_4CCD26F6",
+    "merchant_id": "M_CAFE_088",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 47457.39,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 47457.39,
+    "utr": "PAYTMUTR7858137768",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_4EDC58D6",
+    "merchant_id": "M_PHA_0010",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 40227.99,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 40227.99,
+    "utr": "PAYTMUTR7787176100",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_AF857CCF",
+    "merchant_id": "M_KIR_0011",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 12079.58,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 12079.58,
+    "utr": "PAYTMUTR3007037448",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_34938FE4",
+    "merchant_id": "M_PHA_0012",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 39058.8,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 39058.8,
+    "utr": "PAYTMUTR8506620354",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_85DE9A90",
+    "merchant_id": "M_PHA_0013",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 53992.78,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 53992.78,
+    "utr": "PAYTMUTR7344079811",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_0A6C2BB4",
+    "merchant_id": "M_KIR_0014",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 57664.22,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 57664.22,
+    "utr": "PAYTMUTR9548919556",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_2435BAA0",
+    "merchant_id": "M_CLI_0015",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 8221.35,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 8221.35,
+    "utr": "PAYTMUTR7576333478",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_41E5F738",
+    "merchant_id": "M_KIR_0016",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 59623.17,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 59623.17,
+    "utr": "PAYTMUTR9006767870",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_3876BADE",
+    "merchant_id": "M_KIR_0017",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 27593.27,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 27593.27,
+    "utr": "PAYTMUTR4812306139",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_BEF5427C",
+    "merchant_id": "M_KIR_0018",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 12210.41,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 12210.41,
+    "utr": "PAYTMUTR1695286297",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_D82EA510",
+    "merchant_id": "M_KIR_0019",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 92503.63,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 92503.63,
+    "utr": "PAYTMUTR7675806582",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_6037855D",
+    "merchant_id": "M_CAF_0020",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 38951.45,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 38951.45,
+    "utr": "PAYTMUTR9808259633",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_0246FE6F",
+    "merchant_id": "M_CAF_0021",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 45258.55,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 45258.55,
+    "utr": "PAYTMUTR7734439703",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_DBA26A42",
+    "merchant_id": "M_KIR_0022",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 54343.12,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 54343.12,
+    "utr": "PAYTMUTR4426937135",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_1DE2830C",
+    "merchant_id": "M_KIR_0023",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 18667.64,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 18667.64,
+    "utr": "PAYTMUTR8381584032",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_75084088",
+    "merchant_id": "M_CAF_0024",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 72414.88,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 72414.88,
+    "utr": "PAYTMUTR8468960627",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_3D24D688",
+    "merchant_id": "M_CAF_0025",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 10953.02,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 10953.02,
+    "utr": "PAYTMUTR1235342161",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_9051600F",
+    "merchant_id": "M_KIR_0026",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 6599.89,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 6599.89,
+    "utr": "PAYTMUTR8431807818",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_F523F89B",
+    "merchant_id": "M_KIR_0027",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 56855.41,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 56855.41,
+    "utr": "PAYTMUTR9133170153",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_E86C92BA",
+    "merchant_id": "M_KIR_0028",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 10119.14,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 10119.14,
+    "utr": "PAYTMUTR7903262979",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_17DD10D0",
+    "merchant_id": "M_CAF_0029",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 52992.37,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 52992.37,
+    "utr": "PAYTMUTR5911289264",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_669ECEF8",
+    "merchant_id": "M_KIR_0030",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 27414.09,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 27414.09,
+    "utr": "PAYTMUTR1282026688",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_BFCFB74A",
+    "merchant_id": "M_KIR_0031",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 64325.47,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 64325.47,
+    "utr": "PAYTMUTR4015443817",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_81CB8654",
+    "merchant_id": "M_KIR_0032",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 76265.09,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 76265.09,
+    "utr": "PAYTMUTR5064855664",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_1C24DAB4",
+    "merchant_id": "M_KIR_0033",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 60027.45,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 60027.45,
+    "utr": "PAYTMUTR6186370650",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_86F15A8E",
+    "merchant_id": "M_PHA_0034",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 91411.06,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 91411.06,
+    "utr": "PAYTMUTR4898978496",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_459F3C0A",
+    "merchant_id": "M_CAF_0035",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 37391.44,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 37391.44,
+    "utr": "PAYTMUTR1193247172",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_23844D5C",
+    "merchant_id": "M_KIR_0036",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 30729.28,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 30729.28,
+    "utr": "PAYTMUTR3680699659",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_D30028D6",
+    "merchant_id": "M_KIR_0037",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 36466.36,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 36466.36,
+    "utr": "PAYTMUTR9327522046",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_17F658ED",
+    "merchant_id": "M_KIR_0038",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 25752.39,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 25752.39,
+    "utr": "PAYTMUTR5558716575",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_BDC1B74C",
+    "merchant_id": "M_KIR_0039",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 72389.5,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 72389.5,
+    "utr": "PAYTMUTR5847294329",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_80A53549",
+    "merchant_id": "M_CLI_0040",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 45635.19,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 45635.19,
+    "utr": "PAYTMUTR2120820781",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_EE3D7B81",
+    "merchant_id": "M_CAF_0041",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 6655.64,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 6655.64,
+    "utr": "PAYTMUTR2038997815",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_2300B5D4",
+    "merchant_id": "M_KIR_0042",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 27123.54,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 27123.54,
+    "utr": "PAYTMUTR1591352344",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_A53910DA",
+    "merchant_id": "M_CAF_0043",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 26108.83,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 26108.83,
+    "utr": "PAYTMUTR9667911533",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_90FE9129",
+    "merchant_id": "M_KIR_0044",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 20842.43,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 20842.43,
+    "utr": "PAYTMUTR4538155730",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_E7AD1A0B",
+    "merchant_id": "M_KIR_0045",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 41457.08,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 41457.08,
+    "utr": "PAYTMUTR7697189519",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_D0139B44",
+    "merchant_id": "M_KIR_0046",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 77741.71,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 77741.71,
+    "utr": "PAYTMUTR5989267179",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_DA4F2818",
+    "merchant_id": "M_KIR_0047",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 67858.46,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 67858.46,
+    "utr": "PAYTMUTR1150543985",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_6504525E",
+    "merchant_id": "M_KIR_0048",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 73063.88,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 73063.88,
+    "utr": "PAYTMUTR3834202509",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_EADB8639",
+    "merchant_id": "M_KIR_0049",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 50073.66,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 50073.66,
+    "utr": "PAYTMUTR4687074065",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_A4C05A13",
+    "merchant_id": "M_CAF_0050",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 19169.01,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 19169.01,
+    "utr": "PAYTMUTR1407767841",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_45C6DEDE",
+    "merchant_id": "M_KIR_0051",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 41556.43,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 41556.43,
+    "utr": "PAYTMUTR7402759061",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_17A0E01B",
+    "merchant_id": "M_KIR_0052",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 70389.83,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 70389.83,
+    "utr": "PAYTMUTR9249070165",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  },
+  {
+    "settlement_id": "SETTLE_2E353BE1",
+    "merchant_id": "M_CAF_0053",
+    "settlement_date": "2026-10-27",
+    "gross_amount_inr": 30859.4,
+    "mdr_fee_inr": 0.0,
+    "deductions_inr": 0.0,
+    "deduction_breakdown": {
+      "soundbox_monthly_rental": 0,
+      "regulatory_withholding": 0
+    },
+    "net_settled_inr": 30859.4,
+    "utr": "PAYTMUTR4854318053",
+    "status": "SETTLED",
+    "tat_hours": 14.2,
+    "tat_limit_hours": 24.0
+  }
+]
