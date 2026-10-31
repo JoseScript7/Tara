@@ -8,7 +8,7 @@
 
 Empowering Bharat's 50M+ MSMEs and Kirana merchants with an autonomous multimodal AI teammate — reconciling UPI disputes, managing Soundbox IoT fleets, predicting working capital overdrafts, and automating settlement deductions in real time.
 
-<sub>Built by **CyberPhantoms** for the AWS Student Builder Hackathon</sub>
+<sub>Built by **CyberPhantoms** for the Paytm Build for AI Hackathon</sub>
 
 <br/>
 
