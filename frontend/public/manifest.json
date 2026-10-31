@@ -1,0 +1,18 @@
+{
+  "name": "Tara — Autonomous Merchant AI Teammate",
+  "short_name": "Tara AI",
+  "description": "Autonomous merchant teammate for soundbox telemetry, settlement reconciliation, and dispute resolution.",
+  "start_url": "/mobile",
+  "display": "standalone",
+  "background_color": "#FAF9F5",
+  "theme_color": "#151615",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
