@@ -9,7 +9,6 @@
 Empowering Bharat's 50M+ MSMEs and Kirana merchants with an autonomous multimodal AI teammate — reconciling UPI disputes, managing Soundbox IoT fleets, predicting working capital overdrafts, and automating settlement deductions in real time.
 
 <sub>Built by **CyberPhantoms** for the Paytm Build for AI Hackathon</sub>
-
 <br/>
 
 [![AWS Bedrock](https://img.shields.io/badge/Amazon%20Bedrock-Claude%203.5%20Sonnet-FF9900?logo=amazonaws&logoColor=white)](https://aws.amazon.com/bedrock/)
@@ -219,17 +218,6 @@ pytest tests/test_invariants.py
 ├── Makefile                      # Developer shortcut targets
 └── docker-compose.yml            # Multi-container local orchestration
 ```
-
----
-
-## Team — CyberPhantoms
-
-- **Ranen Joseph Solomon**
-- **Jaiyantan**
-- **Thirumurugan**
-- **Kabelan**
-
----
 
 ## License
 
