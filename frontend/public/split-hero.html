@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>nuvo — Banking that keeps up with freelance life</title>
+  <meta name="description" content="One account for invoices, taxes and getting paid from anywhere. No monthly fees, no waiting for Monday.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       NUVO FREELANCE-BANKING HERO ("COASTAL CLIFFS")
+       Single-file, one-screen split landing hero
+       ========================================================================== */
+
+    :root {
+      /* Scaled desktop unit --u (reference 1440 x 960) */
+      --u: min(100vw / 1440, 100vh / 960);
+      
+      /* Exact palette from specification */
+      --ground: #F8E6DD;
+      --warm-white: #FAF9F5;
+      --ink: #151615;
+      --soft-ink: #696C64;
+      --muted: #C3C4C1;
+      --coral-card: #FE8A70;
+      --coral-cta: #FA7F62;
+      --coral-cta-hover: #F26A4A;
+      --negative: #E5714D;
+      --dark-card: #2C3426;
+      --chips: #EFF2E9;
+      
+      /* Typography */
+      --font-sans: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--ground);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Full-viewport page */
+    .page-viewport {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      padding: calc(8 * var(--u));
+      gap: calc(8 * var(--u));
+      background-color: var(--ground);
+      position: relative;
+    }
+
+    /* ==========================================================================
+       LEFT PANEL (~46% width)
+       ========================================================================== */
+    .left-panel {
+      width: 46%;
+      height: 100%;
+      position: relative;
+      border-radius: calc(32 * var(--u));
+      overflow: hidden;
+      box-shadow: 0 calc(20 * var(--u)) calc(40 * var(--u)) rgba(21, 22, 21, 0.08);
+      background-color: #3a4233; /* Fallback tone */
+      flex-shrink: 0;
+    }
+
+    /* Media Layer: Image & Looping Video */
+    .media-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .photo-fallback {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+      z-index: 1;
+    }
+
+    .loop-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+      z-index: 2;
+    }
+
+    .loop-video.ready {
+      opacity: 1;
+    }
+
+    /* Subtle ambient dark overlay to ensure card & text legibility */
+    .media-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.15) 0%,
+        rgba(0, 0, 0, 0) 40%,
+        rgba(0, 0, 0, 0.45) 100%
+      );
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Dust specks (SVG circles near top) */
+    .dust-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .dust-speck {
+      fill: rgba(255, 255, 255, 0.6);
+      animation: floatDust 6s ease-in-out infinite alternate;
+    }
+    .dust-speck:nth-child(2) { animation-duration: 8s; animation-delay: -2s; }
+    .dust-speck:nth-child(3) { animation-duration: 7s; animation-delay: -4s; }
+    .dust-speck:nth-child(4) { animation-duration: 9s; animation-delay: -1s; }
+
+    @keyframes floatDust {
+      0% { transform: translateY(0) translateX(0); opacity: 0.3; }
+      100% { transform: translateY(calc(12 * var(--u))) translateX(calc(8 * var(--u))); opacity: 0.8; }
+    }
+
+    /* Floating Cards Stack */
+    .cards-container {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    /* 1. Coral Balance Card */
+    .card-coral {
+      position: absolute;
+      top: calc(90 * var(--u));
+      left: calc(38 * var(--u));
+      width: calc(310 * var(--u));
+      padding: calc(22 * var(--u)) calc(24 * var(--u));
+      background-color: var(--coral-card);
+      border-radius: calc(24 * var(--u));
+      color: var(--ink);
+      box-shadow: 0 calc(18 * var(--u)) calc(36 * var(--u)) rgba(21, 22, 21, 0.22);
+      transform: rotate(-3deg);
+      pointer-events: auto;
+      transform-origin: top left;
+      transition: transform 0.3s ease;
+    }
+    .card-coral:hover {
+      transform: rotate(-1deg) translateY(calc(-4 * var(--u)));
+    }
+
+    .card-label {
+      font-size: calc(10 * var(--u));
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      opacity: 0.85;
+      text-transform: uppercase;
+      margin-bottom: calc(6 * var(--u));
+    }
+
+    .card-amount-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: calc(12 * var(--u));
+      margin-bottom: calc(16 * var(--u));
+    }
+
+    .card-amount {
+      font-size: calc(30 * var(--u));
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .white-chip {
+      background-color: var(--warm-white);
+      color: var(--ink);
+      font-size: calc(11 * var(--u));
+      font-weight: 700;
+      padding: calc(4 * var(--u)) calc(10 * var(--u));
+      border-radius: calc(20 * var(--u));
+      white-space: nowrap;
+      box-shadow: 0 calc(2 * var(--u)) calc(6 * var(--u)) rgba(0,0,0,0.06);
+    }
+
+    .card-footer-row {
+      display: flex;
+      align-items: center;
+      gap: calc(8 * var(--u));
+      font-size: calc(11 * var(--u));
+      font-weight: 600;
+    }
+
+    .dark-dot {
+      width: calc(4 * var(--u));
+      height: calc(4 * var(--u));
+      background-color: var(--ink);
+      border-radius: 50%;
+    }
+
+    .view-detail-link {
+      text-decoration: underline;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    /* 2. Frosted Glass List Card */
+    .card-glass {
+      position: absolute;
+      top: calc(220 * var(--u));
+      left: calc(64 * var(--u));
+      width: calc(340 * var(--u));
+      padding: calc(22 * var(--u));
+      background: rgba(250, 249, 245, 0.72);
+      backdrop-filter: blur(calc(18 * var(--u)));
+      -webkit-backdrop-filter: blur(calc(18 * var(--u)));
+      border-radius: calc(24 * var(--u));
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      color: var(--ink);
+      box-shadow: 0 calc(24 * var(--u)) calc(48 * var(--u)) rgba(21, 22, 21, 0.18);
+      transform: rotate(2deg);
+      pointer-events: auto;
+      transform-origin: center right;
+      transition: transform 0.3s ease;
+    }
+    .card-glass:hover {
+      transform: rotate(0deg) translateY(calc(-4 * var(--u)));
+    }
+
+    .glass-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: calc(8 * var(--u)) 0;
+      font-size: calc(13 * var(--u));
+      font-weight: 600;
+      border-bottom: 1px solid rgba(21, 22, 21, 0.06);
+    }
+    .glass-row:last-child {
+      border-bottom: none;
+    }
+
+    .glass-studio {
+      color: var(--ink);
+    }
+    .glass-pos {
+      color: #145A19;
+      font-weight: 700;
+    }
+
+    .coral-chip-neg {
+      background-color: #FFE4DE;
+      color: var(--negative);
+      font-size: calc(11 * var(--u));
+      font-weight: 700;
+      padding: calc(3 * var(--u)) calc(8 * var(--u));
+      border-radius: calc(12 * var(--u));
+    }
+
+    .glass-invoice-alert {
+      margin-top: calc(8 * var(--u));
+      background-color: var(--warm-white);
+      border-radius: calc(14 * var(--u));
+      padding: calc(10 * var(--u)) calc(12 * var(--u));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: calc(11 * var(--u));
+      font-weight: 600;
+    }
+    .send-reminder-link {
+      color: var(--coral-cta);
+      text-decoration: none;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* 3. Dark Card */
+    .card-dark {
+      position: absolute;
+      top: calc(385 * var(--u));
+      left: calc(32 * var(--u));
+      width: calc(295 * var(--u));
+      padding: calc(20 * var(--u)) calc(22 * var(--u));
+      background-color: var(--dark-card);
+      border-radius: calc(24 * var(--u));
+      color: var(--warm-white);
+      box-shadow: 0 calc(24 * var(--u)) calc(48 * var(--u)) rgba(0, 0, 0, 0.35);
+      transform: rotate(-1.5deg);
+      pointer-events: auto;
+      transition: transform 0.3s ease;
+    }
+    .card-dark:hover {
+      transform: rotate(0deg) translateY(calc(-4 * var(--u)));
+    }
+
+    .dark-card-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: calc(11 * var(--u));
+      letter-spacing: 0.04em;
+      opacity: 0.7;
+      margin-bottom: calc(20 * var(--u));
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .dark-card-wordmark {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: calc(36 * var(--u));
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    /* Corner Greeting: "Hey, / it's nuvo!" */
+    .left-corner-text {
+      position: absolute;
+      bottom: calc(36 * var(--u));
+      left: calc(40 * var(--u));
+      z-index: 6;
+      color: #FFFFFF;
+      pointer-events: none;
+      text-shadow: 0 calc(4 * var(--u)) calc(16 * var(--u)) rgba(0, 0, 0, 0.4);
+    }
+
+    .corner-hey {
+      display: block;
+      font-size: calc(38 * var(--u));
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .corner-brand {
+      display: block;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: calc(46 * var(--u));
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    /* ==========================================================================
+       RIGHT COLUMN (fills remaining width)
+       ========================================================================== */
+    .right-column {
+      flex: 1;
+      height: 100%;
+      background-color: var(--warm-white);
+      border-radius: calc(32 * var(--u));
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: calc(32 * var(--u)) calc(54 * var(--u));
+      position: relative;
+      box-shadow: 0 calc(20 * var(--u)) calc(40 * var(--u)) rgba(21, 22, 21, 0.04);
+    }
+
+    /* Header: Menu Button | Centered Wordmark | Profile Button */
+    .column-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .square-btn {
+      width: calc(44 * var(--u));
+      height: calc(44 * var(--u));
+      border-radius: calc(14 * var(--u));
+      border: 1px solid rgba(21, 22, 21, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background-color: #FFFFFF;
+    }
+    .square-btn:hover {
+      background-color: #F0EEEA;
+    }
+
+    .menu-icon {
+      width: calc(18 * var(--u));
+      height: calc(12 * var(--u));
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .menu-icon span {
+      display: block;
+      height: calc(2 * var(--u));
+      width: 100%;
+      background-color: var(--ink);
+      border-radius: 1px;
+    }
+
+    .header-wordmark {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: calc(32 * var(--u));
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+
+    .profile-btn {
+      background-color: var(--dark-card);
+      border-color: var(--dark-card);
+      color: var(--warm-white);
+    }
+    .profile-btn:hover {
+      background-color: #1f251a;
+    }
+
+    .profile-avatar-icon {
+      width: calc(18 * var(--u));
+      height: calc(18 * var(--u));
+      border-radius: 50%;
+      border: calc(2 * var(--u)) solid var(--warm-white);
+      position: relative;
+    }
+
+    /* Hero Text & CTA Block (centered) */
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin: auto 0;
+      position: relative;
+      width: 100%;
+    }
+
+    .headline {
+      font-size: calc(64 * var(--u));
+      line-height: 1.05;
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      margin-bottom: calc(24 * var(--u));
+      text-align: center;
+    }
+
+    .headline-line {
+      display: block;
+      overflow: hidden;
+    }
+
+    .headline-line span {
+      display: inline-block;
+    }
+
+    .headline-serif {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+
+    .lede {
+      font-size: calc(17 * var(--u));
+      line-height: 1.45;
+      color: var(--soft-ink);
+      max-width: calc(480 * var(--u));
+      margin: 0 auto calc(42 * var(--u));
+      font-weight: 450;
+    }
+
+    /* Coral CTA Pill: exactly 151u x 45u, centered with transform */
+    .cta-pill-wrapper {
+      position: relative;
+      width: 100%;
+      height: calc(45 * var(--u));
+    }
+
+    .coral-cta-btn {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(165 * var(--u));
+      height: calc(45 * var(--u));
+      background-color: var(--coral-cta);
+      color: var(--ink);
+      border: none;
+      border-radius: calc(30 * var(--u));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: calc(20 * var(--u));
+      padding-right: calc(6 * var(--u));
+      font-size: calc(14 * var(--u));
+      font-weight: 600;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      box-shadow: 0 calc(4 * var(--u)) calc(12 * var(--u)) rgba(250, 127, 98, 0.3);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+    }
+
+    /* Required: Keep translateX(-50%) on hover! */
+    .coral-cta-btn:hover {
+      background-color: var(--coral-cta-hover);
+      transform: translateX(-50%) translateY(calc(-2 * var(--u)));
+      box-shadow: 0 calc(8 * var(--u)) calc(18 * var(--u)) rgba(250, 127, 98, 0.4);
+    }
+
+    .coral-cta-btn:active {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .cta-arrow-box {
+      width: calc(33 * var(--u));
+      height: calc(33 * var(--u));
+      background-color: var(--dark-card);
+      color: var(--warm-white);
+      border-radius: calc(20 * var(--u));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+
+    .coral-cta-btn:hover .cta-arrow-box {
+      transform: translateX(calc(2 * var(--u)));
+    }
+
+    /* Footer facts */
+    .footer-facts {
+      font-size: calc(13 * var(--u));
+      color: var(--muted);
+      text-align: center;
+      letter-spacing: 0.02em;
+      font-weight: 500;
+    }
+
+    /* Direct jump to App Bar */
+    .app-switch-bar {
+      position: absolute;
+      top: calc(18 * var(--u));
+      right: calc(24 * var(--u));
+      display: flex;
+      gap: calc(8 * var(--u));
+      z-index: 100;
+    }
+
+    .switch-link {
+      background: rgba(250, 249, 245, 0.85);
+      backdrop-filter: blur(8px);
+      padding: calc(6 * var(--u)) calc(12 * var(--u));
+      border-radius: calc(16 * var(--u));
+      font-size: calc(11 * var(--u));
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+      border: 1px solid rgba(21, 22, 21, 0.08);
+      transition: background 0.2s ease;
+    }
+    .switch-link:hover {
+      background: #FFFFFF;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE & MOBILE BEHAVIOR
+       Phones: right column comes first, photo panel stacks below
+       ========================================================================== */
+    @media (max-width: 960px) {
+      html, body {
+        overflow-y: auto;
+        height: auto;
+      }
+      .page-viewport {
+        height: auto;
+        min-height: 100vh;
+        flex-direction: column;
+        padding: 16px;
+        gap: 16px;
+      }
+      .right-column {
+        order: 1;
+        width: 100%;
+        padding: 32px 24px;
+        border-radius: 24px;
+      }
+      .left-panel {
+        order: 2;
+        width: 100%;
+        height: 520px;
+        border-radius: 24px;
+      }
+      .headline {
+        font-size: 38px;
+      }
+      .card-coral {
+        top: 40px;
+        left: 20px;
+        width: 260px;
+      }
+      .card-glass {
+        top: 150px;
+        left: 30px;
+        width: 280px;
+      }
+      .card-dark {
+        top: 280px;
+        left: 20px;
+        width: 240px;
+      }
+      .loop-video, .photo-fallback {
+        object-position: 50% 32%;
+      }
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      .loop-video {
+        display: none !important;
+      }
+      .photo-fallback {
+        display: block !important;
+      }
+      .dust-speck {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-viewport" id="viewport">
+
+    <!-- Top Navigation Links to App -->
+    <div class="app-switch-bar">
+      <a href="/?mode=onboarding" class="switch-link">Launch Tara App ↗</a>
+      <a href="/robot-landing.html" class="switch-link">3D Robot Landing ↗</a>
+    </div>
+
+    <!-- ====================================================================
+         LEFT PANEL: Tall rounded photo panel showing golden-hour cliff
+         ==================================================================== -->
+    <section class="left-panel" aria-label="Coastal cliffs visual and cards">
+      <div class="media-layer">
+        <!-- Still Photo Fallback -->
+        <img
+          src="/assets/optimized/hero-poster.webp"
+          alt="Golden-hour clifftop meadow with wildflowers above the sea"
+          class="photo-fallback"
+        />
+
+        <!-- Looping 4s video with identical cover framing -->
+        <video
+          id="heroVideo"
+          class="loop-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          poster="/assets/optimized/hero-poster.webp"
+        >
+          <source src="/assets/optimized/coastal-cliffs.mp4" type="video/mp4">
+          <source src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/8c7344a4-d74c-4611-a9f5-bfe0125be0ef.mp4" type="video/mp4">
+        </video>
+
+        <div class="media-overlay"></div>
+
+        <!-- SVG Dust specks near the top -->
+        <svg class="dust-layer" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+          <circle class="dust-speck" cx="80" cy="50" r="1.5" />
+          <circle class="dust-speck" cx="190" cy="30" r="2" />
+          <circle class="dust-speck" cx="290" cy="70" r="1.2" />
+          <circle class="dust-speck" cx="350" cy="40" r="1.8" />
+        </svg>
+      </div>
+
+      <!-- Floating Cards Stack -->
+      <div class="cards-container">
+        <!-- 1. Coral Balance Card -->
+        <div class="card-coral" id="cardCoral">
+          <div class="card-label">Total Balance</div>
+          <div class="card-amount-row">
+            <span class="card-amount">$24,318.40</span>
+            <span class="white-chip">+$3,200 today</span>
+          </div>
+          <div class="card-footer-row">
+            <span class="dark-dot"></span>
+            <span class="view-detail-link">VIEW DETAIL</span>
+          </div>
+        </div>
+
+        <!-- 2. Frosted Glass List Card -->
+        <div class="card-glass" id="cardGlass">
+          <div class="glass-row">
+            <span class="glass-studio">Westbrook Studio</span>
+            <span class="glass-pos">+$3,200</span>
+          </div>
+          <div class="glass-row">
+            <span>Coffee Roasters</span>
+            <span class="coral-chip-neg">−$640</span>
+          </div>
+          <div class="glass-row">
+            <span>Domain Renewal</span>
+            <span class="coral-chip-neg">−$15</span>
+          </div>
+          <div class="glass-invoice-alert">
+            <span>Invoice #0413 is due tomorrow</span>
+            <span class="send-reminder-link">SEND A REMINDER ↗</span>
+          </div>
+        </div>
+
+        <!-- 3. Dark Card -->
+        <div class="card-dark" id="cardDark">
+          <div class="dark-card-header">
+            <span>Virtual card</span>
+            <span>Debit</span>
+          </div>
+          <div class="dark-card-wordmark">nuvo</div>
+        </div>
+      </div>
+
+      <!-- Corner text: "Hey," / "it's nuvo!" -->
+      <div class="left-corner-text" id="cornerText">
+        <span class="corner-hey">Hey,</span>
+        <span class="corner-brand">it's nuvo!</span>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         RIGHT COLUMN: Calm off-white column with header, headline, lede, CTA
+         ==================================================================== -->
+    <section class="right-column" aria-label="Banking features and account opening">
+      <!-- Header -->
+      <header class="column-header" id="colHeader">
+        <button class="square-btn" aria-label="Menu">
+          <div class="menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+
+        <a href="/" class="header-wordmark">nuvo</a>
+
+        <button class="square-btn profile-btn" aria-label="Profile">
+          <div class="profile-avatar-icon"></div>
+        </button>
+      </header>
+
+      <!-- Main Headline, Lede & Centered CTA -->
+      <div class="hero-content">
+        <h1 class="headline" id="headline">
+          <span class="headline-line"><span id="hl1">Banking that</span></span>
+          <span class="headline-line"><span id="hl2">keeps up with</span></span>
+          <span class="headline-line"><span id="hl3" class="headline-serif">freelance life</span></span>
+        </h1>
+
+        <p class="lede" id="lede">
+          One account for invoices, taxes and getting paid from anywhere. No monthly fees, no waiting for Monday.
+        </p>
+
+        <!-- CTA Centered under lede -->
+        <div class="cta-pill-wrapper">
+          <a href="/?mode=onboarding" class="coral-cta-btn" id="ctaBtn">
+            <span>Open an account</span>
+            <div class="cta-arrow-box">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer Facts -->
+      <footer class="footer-facts" id="footerFacts">
+        No monthly fees · 30+ currencies
+      </footer>
+    </section>
+
+  </div>
+
+  <script>
+    // ==========================================================================
+    // VANILLA JS & WEB ANIMATIONS TIMELINE (~2.5s)
+    // ==========================================================================
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Video fade-in once first frame is ready
+      const video = document.getElementById('heroVideo');
+      if (video) {
+        if (video.readyState >= 2) {
+          video.classList.add('ready');
+        } else {
+          video.addEventListener('loadeddata', () => {
+            video.classList.add('ready');
+          });
+        }
+      }
+
+      // Check for prefers-reduced-motion
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+
+      // 2. Web Animations Timeline Entrance (2.5s)
+      const colHeader = document.getElementById('colHeader');
+      const hl1 = document.getElementById('hl1');
+      const hl2 = document.getElementById('hl2');
+      const hl3 = document.getElementById('hl3');
+      const lede = document.getElementById('lede');
+      const ctaBtn = document.getElementById('ctaBtn');
+      const footerFacts = document.getElementById('footerFacts');
+
+      const cardCoral = document.getElementById('cardCoral');
+      const cardGlass = document.getElementById('cardGlass');
+      const cardDark = document.getElementById('cardDark');
+      const cornerText = document.getElementById('cornerText');
+
+      // Header settles
+      colHeader.animate([
+        { opacity: 0, transform: 'translateY(-15px)' },
+        { opacity: 1, transform: 'translateY(0)' }
+      ], {
+        duration: 700,
+        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        fill: 'both'
+      });
+
+      // Headline lines wipe up one by one
+      const lines = [hl1, hl2, hl3];
+      lines.forEach((line, index) => {
+        line.animate([
+          { opacity: 0, transform: 'translateY(100%)' },
+          { opacity: 1, transform: 'translateY(0)' }
+        ], {
+          duration: 900,
+          delay: 200 + (index * 150),
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+          fill: 'both'
+        });
+      });
+
+      // Lede rises
+      lede.animate([
+        { opacity: 0, transform: 'translateY(20px)' },
+        { opacity: 1, transform: 'translateY(0)' }
+      ], {
+        duration: 800,
+        delay: 750,
+        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        fill: 'both'
+      });
+
+      // CTA rises (preserving translateX(-50%))
+      ctaBtn.animate([
+        { opacity: 0, transform: 'translateX(-50%) translateY(24px)' },
+        { opacity: 1, transform: 'translateX(-50%) translateY(0)' }
+      ], {
+        duration: 800,
+        delay: 950,
+        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        fill: 'both'
+      });
+
+      // Footer facts fade in
+      footerFacts.animate([
+        { opacity: 0 },
+        { opacity: 1 }
+      ], {
+        duration: 800,
+        delay: 1100,
+        easing: 'ease-out',
+        fill: 'both'
+      });
+
+      // Floating cards float in on the photo
+      cardCoral.animate([
+        { opacity: 0, transform: 'rotate(-8deg) translateY(40px) scale(0.95)' },
+        { opacity: 1, transform: 'rotate(-3deg) translateY(0) scale(1)' }
+      ], {
+        duration: 1000,
+        delay: 600,
+        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        fill: 'both'
+      });
+
+      cardGlass.animate([
+        { opacity: 0, transform: 'rotate(6deg) translateY(50px) scale(0.95)' },
+        { opacity: 1, transform: 'rotate(2deg) translateY(0) scale(1)' }
+      ], {
+        duration: 1100,
+        delay: 800,
+        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        fill: 'both'
+      });
+
+      cardDark.animate([
+        { opacity: 0, transform: 'rotate(-5deg) translateY(45px) scale(0.95)' },
+        { opacity: 1, transform: 'rotate(-1.5deg) translateY(0) scale(1)' }
+      ], {
+        duration: 1000,
+        delay: 1000,
+        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        fill: 'both'
+      });
+
+      // Corner text fades in
+      cornerText.animate([
+        { opacity: 0, transform: 'translateY(15px)' },
+        { opacity: 1, transform: 'translateY(0)' }
+      ], {
+        duration: 900,
+        delay: 1200,
+        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        fill: 'both'
+      });
+    });
+  </script>
+</body>
+</html>

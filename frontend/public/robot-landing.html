@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TARA — Store Intelligence & Merchant Teammate</title>
+
+  <!-- Google Fonts for Schibsted Grotesk and IBM Plex Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+  <!-- Three.js 0.160.0 Import Map -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <style>
+    /* ==========================================================================
+       PALETTE AND TYPE TOKENS
+       ========================================================================== */
+    :root {
+      --bg: #efece6;
+      --text: #141414;
+      --dim: rgba(20, 20, 20, 0.5);
+      --grid: rgba(20, 20, 20, 0.09);
+      --gradient: conic-gradient(from 200deg, #ffb347, #ff8a3d 18%, #ff5a5f 34%, #ff3d8b 50%, #ff5a5f 66%, #ff8a3d 82%, #ffb347);
+      --linear-grad: linear-gradient(135deg, #ffb347, #ff8a3d, #ff5a5f, #ff3d8b);
+      --col: 17%;
+      --sans: 'Schibsted Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      overflow-x: hidden;
+      width: 100%;
+      scroll-behavior: smooth;
+    }
+
+    /* Fixed 3D Canvas */
+    #c {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* 3 Vertical Guides (17%, 50%, 83%) */
+    .grid-line {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background-color: var(--grid);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .grid-line.col-1 { left: 17%; }
+    .grid-line.col-2 { left: 50%; }
+    .grid-line.col-3 { left: 83%; }
+
+    /* ==========================================================================
+       FIXED CHROME
+       ========================================================================== */
+    /* Top Announcement Bar */
+    #top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 30px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--grid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      z-index: 50;
+      transition: transform 0.5s cubic-bezier(0.6, 0, 0.2, 1);
+    }
+    #top-bar.hidden {
+      transform: translateY(-100%);
+    }
+    #top-bar .close-btn {
+      position: absolute;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    /* Nav Bar (52px) */
+    #nav {
+      position: fixed;
+      top: 30px;
+      left: 0;
+      width: 100%;
+      height: 52px;
+      background: rgba(239, 236, 230, 0.86);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--grid);
+      display: grid;
+      grid-template-columns: 17% 1fr 12% 17%;
+      align-items: center;
+      z-index: 40;
+      transition: top 0.3s ease;
+    }
+    #nav.scrolled {
+      top: 0;
+    }
+
+    /* Logo cell (aligns with 17% guide) */
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-left: 24px;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .logo-mark {
+      width: 27px;
+      height: 27px;
+      border-radius: 7px;
+      border: 2px solid transparent;
+      background: linear-gradient(var(--bg), var(--bg)) padding-box, var(--linear-grad) border-box;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+    .logo-mark::before,
+    .logo-mark::after {
+      content: '';
+      width: 3.5px;
+      height: 3.5px;
+      border-radius: 50%;
+      background: #141414;
+    }
+    .logo-text {
+      font-family: var(--sans);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    /* Nav Menu Items */
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text);
+      padding-left: 20px;
+    }
+    .nav-menu a {
+      color: var(--text);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-menu a:hover {
+      opacity: 0.6;
+    }
+
+    /* Pad Cell */
+    .nav-pad {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-left: 1px solid var(--grid);
+      border-right: 1px solid var(--grid);
+    }
+    .nav-pad a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    /* Launch Button Cell */
+    .nav-launch {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 24px;
+    }
+    .btn-launch {
+      position: relative;
+      height: 30px;
+      padding: 0 14px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid rgba(20, 20, 20, 0.25);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-launch::after {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      right: 50%;
+      bottom: 50%;
+      border-top: 2px solid #ff8a3d;
+      border-left: 2px solid #ff8a3d;
+      pointer-events: none;
+    }
+    .btn-launch:hover {
+      background: #e5e2dc;
+    }
+
+    /* Right Rail (Fixed, Vertically Centered, 270px tall) */
+    #right-rail {
+      position: fixed;
+      right: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 270px;
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+    .rail-dots {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+    .rail-dot {
+      width: 2.5px;
+      height: 2.5px;
+      border-radius: 50%;
+      background: rgba(20, 20, 20, 0.3);
+    }
+    .rail-slider {
+      position: absolute;
+      top: 0;
+      right: -10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+      transition: top 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .rail-dial {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 1px solid var(--text);
+      position: relative;
+    }
+    .rail-dial::after {
+      content: '';
+      position: absolute;
+      top: 1px;
+      left: 3px;
+      width: 1px;
+      height: 3px;
+      background: var(--text);
+    }
+    .rail-menu-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+
+    /* ==========================================================================
+       SECTIONS CONTAINER (Relative, z-index 10)
+       ========================================================================== */
+    .content-wrap {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+    }
+
+    section {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Reveal animations */
+    .rv {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 1s cubic-bezier(0.2, 0.7, 0.2, 1), transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    .rv.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .rv-d1 { transition-delay: 0.1s; }
+    .rv-d2 { transition-delay: 0.2s; }
+    .rv-d3 { transition-delay: 0.3s; }
+    .rv-d4 { transition-delay: 0.4s; }
+
+    /* ==========================================================================
+       SECTION 1: INTRO
+       ========================================================================== */
+    #sec-intro {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Prompt Box (left at 17%, top 30%, width 24.4%) */
+    .prompt-box-wrap {
+      position: absolute;
+      left: 17%;
+      top: 30%;
+      width: 24.4%;
+      min-width: 280px;
+    }
+    .prompt-tab {
+      width: 42px;
+      height: 42px;
+      background: var(--bg);
+      border: 1px solid var(--grid);
+      border-bottom: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Georgia, serif;
+      font-weight: 700;
+      font-size: 24px;
+      color: var(--text);
+    }
+    .prompt-card {
+      position: relative;
+      border: 1px solid rgba(20, 20, 20, 0.25);
+      background: rgba(239, 236, 230, 0.88);
+      padding: 16px;
+      font-family: var(--mono);
+      font-size: 11px;
+      line-height: 1.45;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      min-height: 74px;
+    }
+    /* 7px corner brackets */
+    .prompt-card::before, .prompt-card::after {
+      content: '';
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-color: #141414;
+      pointer-events: none;
+    }
+    .prompt-card::before {
+      top: -4px;
+      left: -4px;
+      border-top: 1.5px solid #141414;
+      border-left: 1.5px solid #141414;
+    }
+    .prompt-card::after {
+      bottom: -4px;
+      right: -4px;
+      border-bottom: 1.5px solid #141414;
+      border-right: 1.5px solid #141414;
+    }
+    .prompt-caret {
+      display: inline-block;
+      width: 6px;
+      height: 11px;
+      background: var(--text);
+      vertical-align: middle;
+      margin-left: 2px;
+      animation: blink 0.85s infinite;
+    }
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    .prompt-next-preview {
+      margin-top: 10px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Rule from prompt box to 83% guide */
+    .intro-hairline-rule {
+      position: absolute;
+      top: 30%;
+      left: calc(17% + 24.4%);
+      right: 17%;
+      height: 1px;
+      background-color: var(--grid);
+    }
+
+    /* Feature List under rule, right-aligned to 83% guide, 23% wide */
+    .feature-list-wrap {
+      position: absolute;
+      top: calc(30% + 1px);
+      right: 17%;
+      width: 23%;
+      min-width: 200px;
+    }
+    .feature-row {
+      height: 21px;
+      border-bottom: 1px solid var(--grid);
+      display: flex;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+      position: relative;
+    }
+    .feature-row.dim {
+      color: var(--dim);
+    }
+    .feature-row-dot {
+      position: absolute;
+      left: 18%;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--text);
+    }
+    .feature-row-text {
+      padding-left: calc(18% + 10px);
+    }
+
+    /* Bottom Left: Headline "Thinking Machines" */
+    .intro-bottom-left {
+      position: absolute;
+      bottom: 60px;
+      left: 64px;
+      max-width: 640px;
+    }
+    .intro-eyebrow {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      color: var(--text);
+      background: rgba(239, 236, 230, 0.88);
+      display: inline-block;
+      padding: 2px 6px;
+    }
+    .headline-box-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .headline-box {
+      font-size: clamp(42px, 5.25vw, 92px);
+      font-weight: 400;
+      line-height: 1.05;
+      display: inline-block;
+      padding: 6px 20px;
+      background: rgba(239, 236, 230, 0.88);
+    }
+    .headline-box-1 {
+      border: 2px solid transparent;
+      border-image: linear-gradient(135deg, #ff8a3d, #ff5a5f, #ff3d8b) 1;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%);
+    }
+    .headline-box-2 {
+      border: 2px solid transparent;
+      border-image: linear-gradient(135deg, #ffb347, #ff8a3d, #ff5a5f) 1;
+    }
+
+    /* Sub line at bottom 3.6%, left at 62% + 18px */
+    .intro-sub-line {
+      position: absolute;
+      bottom: 3.6%;
+      left: calc(62% + 18px);
+      font-size: 14.5px;
+      color: var(--text);
+      background: rgba(239, 236, 230, 0.88);
+      padding: 4px 8px;
+      max-width: 320px;
+      line-height: 1.4;
+    }
+
+    /* Scroll Link at bottom right */
+    .intro-scroll-link {
+      position: absolute;
+      bottom: 3.6%;
+      right: 32px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      padding: 4px 8px;
+      border: 1px solid rgba(20, 20, 20, 0.3);
+      background: rgba(239, 236, 230, 0.88);
+    }
+    .intro-scroll-arrow {
+      animation: bob 2s infinite ease-in-out;
+    }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+
+    /* Bottom rule: 50% to right edge at bottom 14% */
+    .intro-bottom-rule {
+      position: absolute;
+      bottom: 14%;
+      left: 50%;
+      right: 0;
+      height: 1px;
+      background: var(--grid);
+    }
+
+    /* ==========================================================================
+       SECTION 2: PRODUCT
+       ========================================================================== */
+    #sec-product {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 100px;
+    }
+
+    /* 74px Tab Carousel Strip */
+    .tab-carousel-wrap {
+      width: 100%;
+      height: 74px;
+      margin-left: 17%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    .tab-carousel-track {
+      display: flex;
+      align-items: center;
+      transition: transform 0.9s cubic-bezier(0.65, 0, 0.2, 1);
+    }
+    .carousel-tab {
+      width: 33vw;
+      min-width: 260px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 16px;
+      border: 1px solid transparent;
+      opacity: 0.14;
+      transition: opacity 0.5s ease, border-color 0.5s ease;
+      position: relative;
+      background: rgba(239, 236, 230, 0.88);
+    }
+    .carousel-tab.active {
+      opacity: 1;
+      border-color: rgba(20, 20, 20, 0.35);
+    }
+    .carousel-tab.active::before,
+    .carousel-tab.active::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-color: #141414;
+    }
+    .carousel-tab.active::before {
+      top: -3px; left: -3px;
+      border-top: 1.5px solid #141414;
+      border-left: 1.5px solid #141414;
+    }
+    .carousel-tab.active::after {
+      bottom: -3px; right: -3px;
+      border-bottom: 1.5px solid #141414;
+      border-right: 1.5px solid #141414;
+    }
+    .tab-num-cell {
+      width: 48px;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .tab-label {
+      font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Bottom Left Headline: "Your Gateway To Web3 AI" */
+    .product-headline-wrap {
+      position: absolute;
+      bottom: 80px;
+      left: 64px;
+      font-size: clamp(30px, 3.05vw, 54px);
+      font-weight: 400;
+      line-height: 1.15;
+    }
+    .product-dots {
+      font-family: var(--mono);
+      font-size: 16px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .product-box {
+      border: 1px solid rgba(20, 20, 20, 0.35);
+      border-radius: 8px;
+      padding: 4px 16px;
+      display: inline-block;
+      margin-bottom: 6px;
+      background: rgba(239, 236, 230, 0.88);
+    }
+    .product-line-2 {
+      background: rgba(239, 236, 230, 0.88);
+      display: inline-block;
+      padding: 2px 8px;
+    }
+
+    /* ==========================================================================
+       SECTION 3: REVIEWS
+       ========================================================================== */
+    #sec-reviews {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 100px;
+    }
+
+    /* Header Strip (60px tall) */
+    .reviews-header-strip {
+      height: 60px;
+      border-bottom: 1px solid var(--grid);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 40px 0 17%;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: rgba(239, 236, 230, 0.7);
+    }
+    .review-num-bracket {
+      padding: 2px 6px;
+      border: 1px solid rgba(20, 20, 20, 0.3);
+      border-radius: 3px;
+    }
+    .review-avatar-svg {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      border: 1px solid var(--grid);
+      overflow: hidden;
+    }
+    .review-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .review-author {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .review-role {
+      color: var(--dim);
+    }
+
+    /* Quote (left, top 26%, 23vw wide) */
+    .review-quote-wrap {
+      position: absolute;
+      top: 26%;
+      left: 17%;
+      width: 28vw;
+      min-width: 320px;
+    }
+    .review-quote-text {
+      font-size: clamp(20px, 2.3vw, 40px);
+      line-height: 1.19;
+      font-weight: 500;
+      color: var(--text);
+      background: rgba(239, 236, 230, 0.88);
+      padding: 8px 12px;
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .review-try-link {
+      margin-top: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      border-left: 2px solid #141414;
+      padding-left: 12px;
+      background: rgba(239, 236, 230, 0.88);
+    }
+
+    /* Arrows at bottom left */
+    .review-controls {
+      position: absolute;
+      bottom: 80px;
+      left: 17%;
+      display: flex;
+      gap: 12px;
+    }
+    .review-arrow-btn {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(20, 20, 20, 0.3);
+      background: rgba(239, 236, 230, 0.9);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--text);
+      transition: background 0.2s;
+    }
+    .review-arrow-btn:hover {
+      background: #e2ded7;
+    }
+
+    /* Ghost Review to the right of 83% guide */
+    .review-ghost {
+      position: absolute;
+      top: 30%;
+      left: calc(83% + 20px);
+      width: 24vw;
+      opacity: 0.12;
+      font-size: 20px;
+      line-height: 1.25;
+      pointer-events: none;
+    }
+
+    /* Footer (30vh, centered mono) */
+    footer {
+      height: 30vh;
+      border-top: 1px solid var(--grid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dim);
+      background: var(--bg);
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ==========================================================================
+       MOBILE RESPONSIVE (<= 900px)
+       ========================================================================== */
+    @media (max-width: 900px) {
+      .grid-line.col-1, .grid-line.col-3 { display: none; }
+      .nav-menu, .nav-pad, #right-rail, .feature-list-wrap, .intro-hairline-rule, .intro-sub-line, .review-ghost {
+        display: none !important;
+      }
+      #nav {
+        grid-template-columns: 1fr auto;
+      }
+      .prompt-box-wrap {
+        left: 20px;
+        right: 20px;
+        width: calc(100% - 40px);
+        top: 18%;
+      }
+      .intro-bottom-left {
+        left: 20px;
+        bottom: 24px;
+      }
+      .intro-scroll-link {
+        right: 20px;
+        bottom: 24px;
+      }
+      .tab-carousel-wrap {
+        margin-left: 20px;
+      }
+      .product-headline-wrap {
+        left: 20px;
+        bottom: 40px;
+      }
+      .reviews-header-strip {
+        padding-left: 20px;
+      }
+      .review-quote-wrap {
+        left: 20px;
+        width: calc(100% - 40px);
+      }
+      .review-controls {
+        left: 20px;
+        bottom: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Three.js Canvas -->
+  <canvas id="c"></canvas>
+
+  <!-- Vertical 1px Grid Guides (17%, 50%, 83%) -->
+  <div class="grid-line col-1"></div>
+  <div class="grid-line col-2"></div>
+  <div class="grid-line col-3"></div>
+
+  <!-- Top Announcement Bar -->
+  <header id="top-bar">
+    <span><strong>New:</strong> Tara 3.0 Is Live — The Autonomous Teammate for Indian Retailers ↗</span>
+    <button class="close-btn" id="top-bar-close" aria-label="Close bar">×</button>
+  </header>
+
+  <!-- Nav Bar -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">
+      <div class="logo-mark"></div>
+      <span class="logo-text">TARA</span>
+    </a>
+    <div class="nav-menu">
+      <a href="#sec-product">Soundbox▾</a>
+      <a href="#sec-product">Settlements</a>
+      <a href="#sec-reviews">Disputes▾</a>
+      <a href="#">Voice AI▾</a>
+      <a href="#">Ops Portal▾</a>
+      <a href="#">Contact us</a>
+    </div>
+    <div class="nav-pad">
+      <a href="#">Tara Desk ↗</a>
+    </div>
+    <div class="nav-launch">
+      <button class="btn-launch" id="btn-launch-nav" onclick="launchTeammateApp()">
+        •• LAUNCH TARA
+      </button>
+    </div>
+  </nav>
+
+  <!-- Right Rail -->
+  <aside id="right-rail" aria-label="Section tracker">
+    <div class="rail-dots">
+      <div class="rail-dot"></div><div class="rail-dot"></div><div class="rail-dot"></div>
+      <div class="rail-dot"></div><div class="rail-dot"></div><div class="rail-dot"></div>
+      <div class="rail-dot"></div><div class="rail-dot"></div><div class="rail-dot"></div>
+      <div class="rail-dot"></div><div class="rail-dot"></div><div class="rail-dot"></div>
+      <div class="rail-dot"></div><div class="rail-dot"></div>
+    </div>
+    <div class="rail-slider" id="rail-slider">
+      <span class="rail-dial"></span>
+      <span id="rail-active-name">INTRO</span>
+    </div>
+    <span class="rail-menu-label">≡ MENU</span>
+  </aside>
+
+  <!-- Content Wrap -->
+  <div class="content-wrap">
+
+    <!-- ====================================================================
+         SECTION 1: INTRO (100vh)
+         ==================================================================== -->
+    <section id="sec-intro">
+      <!-- Auto-typing Prompt Box -->
+      <div class="prompt-box-wrap rv rv-d1">
+        <div class="prompt-tab">“</div>
+        <div class="prompt-card">
+          <span id="typed-prompt"></span><span class="prompt-caret"></span>
+        </div>
+        <div class="prompt-next-preview" id="next-prompt-preview">Next: Reconcile yesterday's settlement...</div>
+      </div>
+
+      <!-- Rule from prompt box to 83% guide -->
+      <div class="intro-hairline-rule"></div>
+
+      <!-- Feature List -->
+      <div class="feature-list-wrap rv rv-d2">
+        <div class="feature-row">
+          <span class="feature-row-dot"></span>
+          <span class="feature-row-text">SOUNDBOX MONITORING</span>
+        </div>
+        <div class="feature-row">
+          <span class="feature-row-dot"></span>
+          <span class="feature-row-text">INSTANT SETTLEMENTS</span>
+        </div>
+        <div class="feature-row">
+          <span class="feature-row-dot"></span>
+          <span class="feature-row-text">DISPUTE RESOLUTION</span>
+        </div>
+        <div class="feature-row dim">
+          <span class="feature-row-dot"></span>
+          <span class="feature-row-text">AND MUCH MORE</span>
+        </div>
+      </div>
+
+      <!-- Bottom Left Headline -->
+      <div class="intro-bottom-left rv rv-d3">
+        <div class="intro-eyebrow">UNLEASH THE POWER OF</div>
+        <div class="headline-box-wrap">
+          <div><h1 class="headline-box headline-box-1">Store</h1></div>
+          <div><h1 class="headline-box headline-box-2">Intelligence</h1></div>
+        </div>
+      </div>
+
+      <!-- Sub Line -->
+      <div class="intro-sub-line rv rv-d4">
+        Your autonomous merchant companion for soundboxes, settlements, and store finance.
+      </div>
+
+      <!-- Scroll Link -->
+      <a href="#sec-product" class="intro-scroll-link">
+        <span>SCROLL</span>
+        <span class="intro-scroll-arrow">↓</span>
+      </a>
+
+      <!-- Bottom Rule -->
+      <div class="intro-bottom-rule"></div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 2: PRODUCT (100vh)
+         ==================================================================== -->
+    <section id="sec-product">
+      <!-- 74px Tab Carousel Strip -->
+      <div class="tab-carousel-wrap rv rv-d1">
+        <div class="tab-carousel-track" id="tab-carousel-track">
+          <div class="carousel-tab active"><span class="tab-num-cell">01</span><span class="tab-label">Soundbox Monitor</span></div>
+          <div class="carousel-tab"><span class="tab-num-cell">02</span><span class="tab-label">Settlement Tracker</span></div>
+          <div class="carousel-tab"><span class="tab-num-cell">03</span><span class="tab-label">UPI Dispute Resolver</span></div>
+          <div class="carousel-tab"><span class="tab-num-cell">04</span><span class="tab-label">Real-time TAT Tracker</span></div>
+          <div class="carousel-tab"><span class="tab-num-cell">05</span><span class="tab-label">Autonomous Resync</span></div>
+          <div class="carousel-tab"><span class="tab-num-cell">06</span><span class="tab-label">Sarvam Indic Voice</span></div>
+          <div class="carousel-tab"><span class="tab-num-cell">07</span><span class="tab-label">NPCI Policy Engine</span></div>
+          <div class="carousel-tab"><span class="tab-num-cell">08</span><span class="tab-label">Inventory Working Capital</span></div>
+          <div class="carousel-tab"><span class="tab-num-cell">09</span><span class="tab-label">Hardware Health AI</span></div>
+          <div class="carousel-tab"><span class="tab-num-cell">10</span><span class="tab-label">Soundbox Monitor</span></div>
+        </div>
+      </div>
+
+      <!-- Bottom Left Headline -->
+      <div class="product-headline-wrap rv rv-d3">
+        <div class="product-dots">··</div>
+        <div class="product-box">Your Teammate</div><br>
+        <div class="product-line-2">For Indian Retail</div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 3: REVIEWS (100vh)
+         ==================================================================== -->
+    <section id="sec-reviews">
+      <!-- Header Strip -->
+      <div class="reviews-header-strip rv rv-d1">
+        <span>TSTMNL</span>
+        <span class="review-num-bracket" id="review-idx-num">01</span>
+        
+        <!-- Inline SVG Avatar (figure in front of brick wall) -->
+        <svg class="review-avatar-svg" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+          <!-- Brick wall background -->
+          <rect width="56" height="56" fill="#c49a88"/>
+          <line x1="0" y1="14" x2="56" y2="14" stroke="#a07260" stroke-width="1.5"/>
+          <line x1="0" y1="28" x2="56" y2="28" stroke="#a07260" stroke-width="1.5"/>
+          <line x1="0" y1="42" x2="56" y2="42" stroke="#a07260" stroke-width="1.5"/>
+          <line x1="18" y1="0" x2="18" y2="14" stroke="#a07260" stroke-width="1.5"/>
+          <line x1="42" y1="0" x2="42" y2="14" stroke="#a07260" stroke-width="1.5"/>
+          <line x1="28" y1="14" x2="28" y2="28" stroke="#a07260" stroke-width="1.5"/>
+          <line x1="10" y1="28" x2="10" y2="42" stroke="#a07260" stroke-width="1.5"/>
+          <line x1="38" y1="28" x2="38" y2="42" stroke="#a07260" stroke-width="1.5"/>
+          <!-- Stylized figure silhouette -->
+          <circle cx="28" cy="24" r="9" fill="#1b1b1f"/>
+          <path d="M14 56 C14 40, 42 40, 42 56 Z" fill="#1b1b1f"/>
+        </svg>
+
+        <div class="review-meta">
+          <span class="review-author" id="review-author">Ramesh Gupta</span>
+          <span>·</span>
+          <span class="review-role" id="review-role">Sharma Provisions & Kirana, Delhi</span>
+        </div>
+      </div>
+
+      <!-- Quote -->
+      <div class="review-quote-wrap rv rv-d2">
+        <blockquote class="review-quote-text" id="review-quote-text">
+          “When my soundbox went silent during evening rush hour, Tara fixed the cellular bearer in 42 seconds before I lost a single customer.”
+        </blockquote>
+        <a href="javascript:void(0)" onclick="launchTeammateApp()" class="review-try-link">
+          <span>Try for yourself (Launch Tara Teammate)</span>
+        </a>
+      </div>
+
+      <!-- Controls -->
+      <div class="review-controls rv rv-d3">
+        <button class="review-arrow-btn" id="review-prev" aria-label="Previous review">←</button>
+        <button class="review-arrow-btn" id="review-next" aria-label="Next review">→</button>
+      </div>
+
+      <!-- Ghost Review -->
+      <div class="review-ghost" id="review-ghost-text">
+        Settlement reconciliation used to take 2 hours every night. Tara finds discrepancies and files claims automatically...
+      </div>
+    </section>
+
+    <!-- Footer (30vh) -->
+    <footer>
+      <span>TARA MERCHANT COMPANION · 2026</span>
+    </footer>
+
+  </div>
+
+  <!-- ======================================================================
+       INTERACTIVE THREE.JS 0.160.0 SCRIPT (Full 3D Ceramic Robot)
+       ====================================================================== -->
+  <script type="module">
+    import * as THREE from 'three';
+    import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+    // ------------------------------------------------------------------------
+    // RENDERER, SCENE, CAMERA
+    // ------------------------------------------------------------------------
+    const canvas = document.getElementById('c');
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: true,
+      powerPreference: 'high-performance'
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.05;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 1.1, 11.6);
+
+    // Environment PMREM (RoomEnvironment, blur 0.04, intensity 0.9)
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    pmremGenerator.compileEquirectangularShader();
+    const roomEnv = new RoomEnvironment();
+    const envTexture = pmremGenerator.fromScene(roomEnv, 0.04).texture;
+    scene.environment = envTexture;
+    scene.environmentIntensity = 0.9;
+
+    // Lights
+    const hemiLight = new THREE.HemisphereLight(0xfff6ee, 0xd9d2c8, 0.7);
+    scene.add(hemiLight);
+
+    const keyLight = new THREE.DirectionalLight(0xfff3e6, 1.7);
+    keyLight.position.set(-3, 5, 4);
+    keyLight.castShadow = true;
+    keyLight.shadow.mapSize.width = 1024;
+    keyLight.shadow.mapSize.height = 1024;
+    keyLight.shadow.radius = 6;
+    keyLight.shadow.bias = -0.0005;
+    scene.add(keyLight);
+
+    const rimLight = new THREE.DirectionalLight(0xfff0e6, 1.2);
+    rimLight.position.set(4, 2, -4);
+    scene.add(rimLight);
+
+    const fillLight = new THREE.PointLight(0xff9a6a, 2.2, 6);
+    fillLight.position.set(-3.2, 1.2, 0.6);
+    scene.add(fillLight);
+
+    // ------------------------------------------------------------------------
+    // CONIC GRADIENT RING CANVAS & TEXTURE
+    // ------------------------------------------------------------------------
+    const ringCanvas = document.createElement('canvas');
+    ringCanvas.width = 512;
+    ringCanvas.height = 512;
+    const ringCtx = ringCanvas.getContext('2d');
+    const conicGrad = ringCtx.createConicGradient(200 * Math.PI / 180, 256, 256);
+    conicGrad.addColorStop(0, '#ff3d8b');
+    conicGrad.addColorStop(0.18, '#ff5a5f');
+    conicGrad.addColorStop(0.34, '#ff8a3d');
+    conicGrad.addColorStop(0.50, '#ffb347');
+    conicGrad.addColorStop(0.66, '#ff8a3d');
+    conicGrad.addColorStop(0.82, '#ff5a5f');
+    conicGrad.addColorStop(1, '#ff3d8b');
+    ringCtx.fillStyle = conicGrad;
+    ringCtx.fillRect(0, 0, 512, 512);
+
+    const ringTexture = new THREE.CanvasTexture(ringCanvas);
+    ringTexture.wrapS = THREE.RepeatWrapping;
+    ringTexture.wrapT = THREE.RepeatWrapping;
+
+    // ------------------------------------------------------------------------
+    // FACE CANVAS & SCREEN TEXTURE (Glowing eyes & Quote mode)
+    // ------------------------------------------------------------------------
+    const faceCanvas = document.createElement('canvas');
+    faceCanvas.width = 512;
+    faceCanvas.height = 512;
+    const faceCtx = faceCanvas.getContext('2d');
+    const faceTexture = new THREE.CanvasTexture(faceCanvas);
+
+    let isQuoteMode = false;
+    let quoteModeAlpha = 0; // 0 to 1
+    let blinkScaleY = 1;
+    let isBlinking = false;
+    let nextBlinkTime = performance.now() + 3000;
+
+    function renderFaceCanvas() {
+      faceCtx.fillStyle = '#000000';
+      faceCtx.fillRect(0, 0, 512, 512);
+
+      // White shapes with glow
+      faceCtx.shadowColor = '#ffffff';
+      faceCtx.shadowBlur = 18;
+      faceCtx.fillStyle = '#ffffff';
+
+      if (quoteModeAlpha < 1) {
+        // Draw Glowing Eyes
+        faceCtx.globalAlpha = 1 - quoteModeAlpha;
+        // Left eye at (196, 262)
+        faceCtx.save();
+        faceCtx.translate(196, 262);
+        faceCtx.scale(1, blinkScaleY);
+        faceCtx.beginPath();
+        faceCtx.ellipse(0, 0, 30, 38, 0, 0, Math.PI * 2);
+        faceCtx.fill();
+        faceCtx.restore();
+
+        // Right eye at (316, 252)
+        faceCtx.save();
+        faceCtx.translate(316, 252);
+        faceCtx.scale(1, blinkScaleY);
+        faceCtx.beginPath();
+        faceCtx.ellipse(0, 0, 30, 38, 0, 0, Math.PI * 2);
+        faceCtx.fill();
+        faceCtx.restore();
+      }
+
+      if (quoteModeAlpha > 0) {
+        // Draw Quote Mark “
+        faceCtx.globalAlpha = quoteModeAlpha;
+        faceCtx.font = '900 560px "Arial Black", sans-serif';
+        faceCtx.textAlign = 'center';
+        faceCtx.textBaseline = 'middle';
+        faceCtx.fillText('“', 256, 400);
+      }
+
+      faceCtx.globalAlpha = 1.0;
+      faceTexture.needsUpdate = true;
+    }
+    renderFaceCanvas();
+
+    // ------------------------------------------------------------------------
+    // MATERIALS
+    // ------------------------------------------------------------------------
+    const shellMat = new THREE.MeshPhysicalMaterial({
+      color: 0xeeebe6,
+      roughness: 0.38,
+      clearcoat: 0.45,
+      clearcoatRoughness: 0.3
+    });
+    const shellLightMat = new THREE.MeshPhysicalMaterial({
+      color: 0xf8f6f2,
+      roughness: 0.34,
+      clearcoat: 0.45,
+      clearcoatRoughness: 0.3
+    });
+    const jointsMat = new THREE.MeshStandardMaterial({
+      color: 0x1b1b1f,
+      roughness: 0.55,
+      metalness: 0.3
+    });
+    const deepDarkMat = new THREE.MeshBasicMaterial({ color: 0x0f0f12 });
+    const pedestalMat = new THREE.MeshStandardMaterial({ color: 0x2a2928, roughness: 0.9 });
+    const ringMat = new THREE.MeshStandardMaterial({
+      map: ringTexture,
+      emissiveMap: ringTexture,
+      emissive: new THREE.Color(0xff8a3d),
+      emissiveIntensity: 0.22,
+      roughness: 0.5
+    });
+    const screenMat = new THREE.MeshPhysicalMaterial({
+      color: 0x000000,
+      clearcoat: 1.0,
+      emissiveMap: faceTexture,
+      emissive: new THREE.Color(0xffffff),
+      emissiveIntensity: 1.6,
+      roughness: 0.1
+    });
+
+    // ------------------------------------------------------------------------
+    // BUILD ROBOT
+    // ------------------------------------------------------------------------
+    const robotGroup = new THREE.Group();
+    scene.add(robotGroup);
+
+    // Pedestal
+    const pedestalGeo = new THREE.BoxGeometry(1.7, 1.6, 1.7);
+    const pedestal = new THREE.Mesh(pedestalGeo, pedestalMat);
+    pedestal.position.set(0, -2.22, 0);
+    pedestal.receiveShadow = true;
+    scene.add(pedestal);
+
+    // TORSO GROUP
+    const torsoGroup = new THREE.Group();
+    torsoGroup.position.set(0, 0, 0);
+    robotGroup.add(torsoGroup);
+
+    const torsoGeo = new RoundedBoxGeometry(1.22, 1.12, 0.92, 4, 0.24);
+    const torsoMesh = new THREE.Mesh(torsoGeo, shellMat);
+    torsoMesh.castShadow = true;
+    torsoMesh.receiveShadow = true;
+    torsoGroup.add(torsoMesh);
+
+    // Shell-light chest slab
+    const chestGeo = new RoundedBoxGeometry(0.9, 0.32, 0.12, 3, 0.05);
+    const chestMesh = new THREE.Mesh(chestGeo, shellLightMat);
+    chestMesh.position.set(0, 0.28, 0.44);
+    torsoGroup.add(chestMesh);
+
+    // 3 Chest LEDs
+    const ledGeo = new THREE.CylinderGeometry(0.025, 0.025, 0.02, 16);
+    const ledColors = [0xff8a3d, 0xff5a5f, 0xff3d8b];
+    ledColors.forEach((col, idx) => {
+      const ledMat = new THREE.MeshBasicMaterial({ color: col });
+      const led = new THREE.Mesh(ledGeo, ledMat);
+      led.rotation.x = Math.PI / 2;
+      led.position.set(-0.16 + idx * 0.16, 0.38, 0.5);
+      torsoGroup.add(led);
+    });
+
+    // Torso dark vertical slots with lips
+    [-0.18, 0.18].forEach(x => {
+      const slotGeo = new THREE.BoxGeometry(0.06, 0.28, 0.04);
+      const slot = new THREE.Mesh(slotGeo, deepDarkMat);
+      slot.position.set(x, -0.12, 0.46);
+      torsoGroup.add(slot);
+
+      const lipGeo = new THREE.TorusGeometry(0.04, 0.015, 8, 16, Math.PI);
+      const lip = new THREE.Mesh(lipGeo, jointsMat);
+      lip.position.set(x, 0.03, 0.46);
+      torsoGroup.add(lip);
+    });
+
+    // Dark pelvis
+    const pelvisGeo = new RoundedBoxGeometry(0.85, 0.22, 0.65, 3, 0.08);
+    const pelvis = new THREE.Mesh(pelvisGeo, jointsMat);
+    pelvis.position.set(0, -0.62, 0);
+    torsoGroup.add(pelvis);
+
+    // NECK
+    const neckGeo = new THREE.CylinderGeometry(0.24, 0.26, 0.28, 24);
+    const neck = new THREE.Mesh(neckGeo, jointsMat);
+    neck.position.set(0, 0.65, 0);
+    torsoGroup.add(neck);
+
+    // HEAD GROUP (pivots at y 0.78)
+    const headPivot = new THREE.Group();
+    headPivot.position.set(0, 0.78, 0);
+    torsoGroup.add(headPivot);
+
+    const headInner = new THREE.Group();
+    headInner.position.set(0, 0.78, 0); // head center is +0.78 above pivot
+    headPivot.add(headInner);
+
+    // Skull
+    const skullGeo = new RoundedBoxGeometry(1.5, 1.42, 1.3, 5, 0.2);
+    const skullMesh = new THREE.Mesh(skullGeo, shellMat);
+    skullMesh.castShadow = true;
+    skullMesh.receiveShadow = true;
+    headInner.add(skullMesh);
+
+    // Dark back block with ~26 circuit bars
+    const backBlockGeo = new THREE.BoxGeometry(1.28, 1.14, 0.9);
+    const backBlock = new THREE.Mesh(backBlockGeo, jointsMat);
+    backBlock.position.set(0, 0, -0.38);
+    headInner.add(backBlock);
+
+    for (let i = 0; i < 26; i++) {
+      const barGeo = new THREE.BoxGeometry(0.08 + Math.random() * 0.12, 0.025, 0.025);
+      const bar = new THREE.Mesh(barGeo, deepDarkMat);
+      bar.position.set(
+        (Math.random() - 0.5) * 1.1,
+        (Math.random() - 0.5) * 0.9,
+        -0.84
+      );
+      headInner.add(bar);
+    }
+
+    // Extruded Face Ring Frame
+    const ringShape = new THREE.Shape();
+    // Outer rounded rect 1.5 x 1.44 r 0.3
+    const w = 1.5, h = 1.44, r = 0.3;
+    ringShape.moveTo(-w/2 + r, -h/2);
+    ringShape.lineTo(w/2 - r, -h/2);
+    ringShape.quadraticCurveTo(w/2, -h/2, w/2, -h/2 + r);
+    ringShape.lineTo(w/2, h/2 - r);
+    ringShape.quadraticCurveTo(w/2, h/2, w/2 - r, h/2);
+    ringShape.lineTo(-w/2 + r, h/2);
+    ringShape.quadraticCurveTo(-w/2, h/2, -w/2, h/2 - r);
+    ringShape.lineTo(-w/2, -h/2 + r);
+    ringShape.quadraticCurveTo(-w/2, -h/2, -w/2 + r, -h/2);
+
+    // Inner hole 1.08 x 1.02 r 0.2
+    const holePath = new THREE.Path();
+    const iw = 1.08, ih = 1.02, ir = 0.2;
+    holePath.moveTo(-iw/2 + ir, -ih/2);
+    holePath.lineTo(iw/2 - ir, -ih/2);
+    holePath.quadraticCurveTo(iw/2, -ih/2, iw/2, -ih/2 + ir);
+    holePath.lineTo(iw/2, ih/2 - ir);
+    holePath.quadraticCurveTo(iw/2, ih/2, iw/2 - ir, ih/2);
+    holePath.lineTo(-iw/2 + ir, ih/2);
+    holePath.quadraticCurveTo(-iw/2, ih/2, -iw/2, ih/2 - ir);
+    holePath.lineTo(-iw/2, -ih/2 + ir);
+    holePath.quadraticCurveTo(-iw/2, -ih/2, -iw/2 + ir, -ih/2);
+    ringShape.holes.push(holePath);
+
+    const ringGeo = new THREE.ExtrudeGeometry(ringShape, {
+      depth: 0.1,
+      bevelEnabled: true,
+      bevelSegments: 4,
+      steps: 1,
+      bevelSize: 0.03,
+      bevelThickness: 0.03
+    });
+    const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+    ringMesh.position.set(0, 0, 0.6);
+    headInner.add(ringMesh);
+
+    // Bezel: inner shell-light frame at z 0.62
+    const bezelGeo = new RoundedBoxGeometry(1.06, 1.0, 0.04, 3, 0.18);
+    const bezelMesh = new THREE.Mesh(bezelGeo, shellLightMat);
+    bezelMesh.position.set(0, 0, 0.62);
+    headInner.add(bezelMesh);
+
+    // Screen: rounded plate 0.9 x 0.84 at z 0.66
+    const screenGeo = new RoundedBoxGeometry(0.9, 0.84, 0.03, 3, 0.14);
+    const screenMesh = new THREE.Mesh(screenGeo, screenMat);
+    screenMesh.position.set(0, 0, 0.66);
+    headInner.add(screenMesh);
+
+    // Ears (cylinders r 0.22)
+    const earGeo = new THREE.CylinderGeometry(0.22, 0.22, 0.2, 24);
+    [-1, 1].forEach(side => {
+      const ear = new THREE.Mesh(earGeo, shellLightMat);
+      ear.rotation.z = Math.PI / 2;
+      ear.position.set(side * 0.84, 0, 0);
+      headInner.add(ear);
+
+      const earCapGeo = new THREE.CylinderGeometry(0.14, 0.14, 0.24, 24);
+      const earCap = new THREE.Mesh(earCapGeo, jointsMat);
+      earCap.rotation.z = Math.PI / 2;
+      earCap.position.set(side * 0.84, 0, 0);
+      headInner.add(earCap);
+    });
+
+    // Right ear cable loop down
+    const cableGeo = new THREE.TorusGeometry(0.24, 0.035, 12, 24, Math.PI);
+    const cable = new THREE.Mesh(cableGeo, jointsMat);
+    cable.rotation.z = Math.PI / 2;
+    cable.position.set(0.88, -0.16, 0);
+    headInner.add(cable);
+
+    // ARMS
+    const armGroups = [];
+    [-1, 1].forEach((side, i) => {
+      const shoulder = new THREE.Group();
+      shoulder.position.set(side * 0.72, 0.38, 0);
+      shoulder.rotation.z = side * -0.16;
+      torsoGroup.add(shoulder);
+
+      // Shoulder ball
+      const ballGeo = new THREE.SphereGeometry(0.14, 16, 16);
+      const sBall = new THREE.Mesh(ballGeo, jointsMat);
+      shoulder.add(sBall);
+
+      // Upper arm
+      const upperGeo = new RoundedBoxGeometry(0.22, 0.52, 0.24, 3, 0.06);
+      const upper = new THREE.Mesh(upperGeo, shellMat);
+      upper.position.set(0, -0.28, 0);
+      shoulder.add(upper);
+
+      // Elbow
+      const elbow = new THREE.Mesh(ballGeo, jointsMat);
+      elbow.position.set(0, -0.56, 0);
+      shoulder.add(elbow);
+
+      // Forearm group
+      const forearm = new THREE.Group();
+      forearm.position.set(0, -0.56, 0);
+      forearm.rotation.x = -0.35;
+      shoulder.add(forearm);
+
+      const foreGeo = new RoundedBoxGeometry(0.24, 0.46, 0.24, 3, 0.06);
+      const foreMesh = new THREE.Mesh(foreGeo, shellMat);
+      foreMesh.position.set(0, -0.24, 0);
+      forearm.add(foreMesh);
+
+      // Hand block & thumb
+      const handGeo = new RoundedBoxGeometry(0.18, 0.16, 0.18, 3, 0.04);
+      const hand = new THREE.Mesh(handGeo, shellLightMat);
+      hand.position.set(0, -0.52, 0);
+      forearm.add(hand);
+
+      const thumbGeo = new THREE.BoxGeometry(0.06, 0.08, 0.06);
+      const thumb = new THREE.Mesh(thumbGeo, shellLightMat);
+      thumb.position.set(side * -0.1, -0.5, 0.05);
+      forearm.add(thumb);
+
+      armGroups.push({ shoulder, forearm, side });
+    });
+
+    // LEGS
+    [-1, 1].forEach(side => {
+      const hipBallGeo = new THREE.SphereGeometry(0.13, 16, 16);
+      const hip = new THREE.Mesh(hipBallGeo, jointsMat);
+      hip.position.set(side * 0.34, -0.72, 0);
+      torsoGroup.add(hip);
+
+      const legGeo = new RoundedBoxGeometry(0.26, 0.62, 0.28, 3, 0.08);
+      const leg = new THREE.Mesh(legGeo, shellMat);
+      leg.position.set(side * 0.34, -1.04, 0);
+      torsoGroup.add(leg);
+
+      const ankleGeo = new THREE.CylinderGeometry(0.09, 0.09, 0.12, 16);
+      const ankle = new THREE.Mesh(ankleGeo, jointsMat);
+      ankle.position.set(side * 0.34, -1.38, 0);
+      torsoGroup.add(ankle);
+
+      const footGeo = new RoundedBoxGeometry(0.32, 0.16, 0.48, 3, 0.06);
+      const foot = new THREE.Mesh(footGeo, shellLightMat);
+      foot.position.set(side * 0.34, -1.45, 0.08);
+      torsoGroup.add(foot);
+    });
+
+    // ------------------------------------------------------------------------
+    // SCROLL, POINTER & ANIMATION BLEND LOGIC
+    // ------------------------------------------------------------------------
+    let smoothedP = 0;
+    let targetP = 0;
+    const pointer = { x: 0, y: 0 };
+    const smoothedPointer = { x: 0, y: 0 };
+
+    window.addEventListener('pointermove', (e) => {
+      pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+      pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const h = window.innerHeight;
+      targetP = Math.max(0, Math.min(2, scrollY / h));
+
+      // Top bar hide on scroll past 40px
+      const topBar = document.getElementById('top-bar');
+      const nav = document.getElementById('nav');
+      if (scrollY > 40) {
+        topBar.classList.add('hidden');
+        nav.classList.add('scrolled');
+      } else {
+        topBar.classList.remove('hidden');
+        nav.classList.remove('scrolled');
+      }
+
+      // Update right rail section active indicator
+      const railSlider = document.getElementById('rail-slider');
+      const railActiveName = document.getElementById('rail-active-name');
+      if (targetP < 0.6) {
+        railSlider.style.top = '0%';
+        railActiveName.textContent = 'INTRO';
+      } else if (targetP < 1.4) {
+        railSlider.style.top = '31%';
+        railActiveName.textContent = 'PRODUCT';
+      } else {
+        railSlider.style.top = '62%';
+        railActiveName.textContent = 'REVIEWS';
+      }
+    });
+
+    function cubicEaseInOut(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    // Camera states from spec:
+    // Intro:   Cam z 11.6, y 1.1,  LookAt y 0.55, Body yaw -0.42, Head yaw/pitch/roll: -0.6 / 0.16 / 0.22
+    // Product: Cam z 6.9,  y 1.95, LookAt y 1.72, Body yaw -0.2,  Head yaw/pitch/roll: -0.06 / 0.04 / 0
+    // Reviews: Same camera as Product
+    const states = [
+      { cz: 11.6, cy: 1.1,  ly: 0.55, by: -0.42, hy: -0.6,  hp: 0.16, hr: 0.22 },
+      { cz: 6.9,  cy: 1.95, ly: 1.72, by: -0.2,  hy: -0.06, hp: 0.04, hr: 0.0 },
+      { cz: 6.9,  cy: 1.95, ly: 1.72, by: -0.2,  hy: -0.06, hp: 0.04, hr: 0.0 }
+    ];
+
+    let clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+
+      // Smooth scroll progress
+      smoothedP += (targetP - smoothedP) * 0.08;
+
+      // Pointer smoothing
+      smoothedPointer.x += (pointer.x - smoothedPointer.x) * 0.06;
+      smoothedPointer.y += (pointer.y - smoothedPointer.y) * 0.06;
+
+      // Interpolate states based on smoothedP (0 to 2)
+      let s0, s1, frac;
+      if (smoothedP <= 1) {
+        s0 = states[0];
+        s1 = states[1];
+        frac = cubicEaseInOut(smoothedP);
+      } else {
+        s0 = states[1];
+        s1 = states[2];
+        frac = cubicEaseInOut(smoothedP - 1);
+      }
+
+      let cz = lerp(s0.cz, s1.cz, frac);
+      let cy = lerp(s0.cy, s1.cy, frac);
+      let ly = lerp(s0.ly, s1.ly, frac);
+      let bodyYaw = lerp(s0.by, s1.by, frac);
+      let headYaw = lerp(s0.hy, s1.hy, frac);
+      let headPitch = lerp(s0.hp, s1.hp, frac);
+      let headRoll = lerp(s0.hr, s1.hr, frac);
+
+      // Responsive camera z multiplier for screens < 900px
+      if (window.innerWidth <= 900) {
+        cz *= 1.25;
+      }
+
+      // Pointer influence
+      camera.position.x = smoothedPointer.x * 0.25;
+      camera.position.y = cy - smoothedPointer.y * 0.1;
+      camera.position.z = cz;
+      camera.lookAt(0, ly, 0);
+
+      // Body & Head rotations
+      robotGroup.rotation.y = bodyYaw + smoothedPointer.x * 0.12;
+
+      // Idle oscillations
+      const bodyBob = Math.sin(1.4 * t) * 0.02;
+      torsoGroup.position.y = bodyBob;
+
+      const idlePitch = Math.sin(0.9 * t) * 0.02;
+      const idleRoll = Math.sin(0.7 * t) * 0.02;
+
+      headPivot.rotation.y = headYaw + smoothedPointer.x * 0.45;
+      headPivot.rotation.x = headPitch + idlePitch + smoothedPointer.y * 0.18;
+      headPivot.rotation.z = headRoll + idleRoll;
+
+      // Gentle arm swing
+      armGroups.forEach(({ shoulder, forearm, side }) => {
+        shoulder.rotation.x = Math.sin(1.4 * t + side) * 0.05;
+        forearm.rotation.x = -0.35 + Math.sin(1.4 * t) * 0.06;
+      });
+
+      // Face Quote Mode Transition
+      isQuoteMode = smoothedP >= 1.55;
+      if (isQuoteMode && quoteModeAlpha < 1) {
+        quoteModeAlpha = Math.min(1, quoteModeAlpha + 0.05);
+        renderFaceCanvas();
+      } else if (!isQuoteMode && quoteModeAlpha > 0) {
+        quoteModeAlpha = Math.max(0, quoteModeAlpha - 0.05);
+        renderFaceCanvas();
+      }
+
+      // Eye blink logic
+      const now = performance.now();
+      if (!isQuoteMode) {
+        if (!isBlinking && now > nextBlinkTime) {
+          isBlinking = true;
+          nextBlinkTime = now + 2500 + Math.random() * 3000;
+        }
+        if (isBlinking) {
+          blinkScaleY -= 0.15;
+          if (blinkScaleY <= 0.1) {
+            blinkScaleY = 0.1;
+            isBlinking = false;
+          }
+          renderFaceCanvas();
+        } else if (blinkScaleY < 1) {
+          blinkScaleY = Math.min(1, blinkScaleY + 0.15);
+          renderFaceCanvas();
+        }
+      }
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Window Resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Close top bar button
+    document.getElementById('top-bar-close').addEventListener('click', () => {
+      document.getElementById('top-bar').classList.add('hidden');
+      document.getElementById('nav').classList.add('scrolled');
+    });
+  </script>
+
+  <!-- ======================================================================
+       INTERACTIVE UI CONTROLLERS (Auto-typing, Tab Carousel, Reviews, Reveal)
+       ====================================================================== -->
+  <script>
+    // ------------------------------------------------------------------------
+    // 1. AUTO-TYPING PROMPT BOX
+    // ------------------------------------------------------------------------
+    const PROMPTS = [
+      "Soundbox SB-4421 missed payment announcement. Was ₹500 credited?",
+      "Explain the ₹120 mismatch in yesterday's HDFC settlement batch.",
+      "Customer paid via UPI QR but bank shows pending. What should I do?",
+      "Reconcile today's UPI collections against my physical ledger."
+    ];
+
+    let promptIdx = 0;
+    let charIdx = 0;
+    let isDeleting = false;
+    const typedEl = document.getElementById('typed-prompt');
+    const previewEl = document.getElementById('next-prompt-preview');
+
+    function typeLoop() {
+      const current = PROMPTS[promptIdx];
+      const next = PROMPTS[(promptIdx + 1) % PROMPTS.length];
+      previewEl.textContent = 'Next: ' + next.slice(0, 36) + '...';
+
+      if (!isDeleting) {
+        typedEl.textContent = current.slice(0, charIdx + 1);
+        charIdx++;
+        if (charIdx === current.length) {
+          setTimeout(() => { isDeleting = true; typeLoop(); }, 2600);
+          return;
+        }
+        setTimeout(typeLoop, 38);
+      } else {
+        charIdx = Math.max(0, charIdx - 2);
+        typedEl.textContent = current.slice(0, charIdx);
+        if (charIdx === 0) {
+          isDeleting = false;
+          promptIdx = (promptIdx + 1) % PROMPTS.length;
+          setTimeout(typeLoop, 250);
+          return;
+        }
+        setTimeout(typeLoop, 14);
+      }
+    }
+    typeLoop();
+
+    // ------------------------------------------------------------------------
+    // 2. TAB CAROUSEL (74px strip, slides left every 2.4s)
+    // ------------------------------------------------------------------------
+    const track = document.getElementById('tab-carousel-track');
+    const tabs = document.querySelectorAll('.carousel-tab');
+    let currentTab = 0;
+
+    setInterval(() => {
+      tabs[currentTab].classList.remove('active');
+      currentTab = (currentTab + 1) % tabs.length;
+      tabs[currentTab].classList.add('active');
+
+      const shiftVw = currentTab * 33;
+      track.style.transform = `translateX(-${shiftVw}vw)`;
+    }, 2400);
+
+    // ------------------------------------------------------------------------
+    // 3. REVIEWS TESTIMONIALS SLIDER
+    // ------------------------------------------------------------------------
+    const REVIEWS = [
+      {
+        quote: "“When my soundbox went silent during evening rush hour, Tara fixed the cellular bearer in 42 seconds before I lost a single customer.”",
+        author: "Ramesh Gupta",
+        role: "Sharma Provisions & Kirana, Delhi"
+      },
+      {
+        quote: "“Settlement reconciliation used to take 2 hours every night. Tara finds discrepancies and files claims automatically.”",
+        author: "Sunita Patel",
+        role: "Patel Medicos & Clinic, Ahmedabad"
+      },
+      {
+        quote: "“My staff can talk to Tara in Marathi or Hindi. She answers settlement doubts instantly without calling customer care.”",
+        author: "Ganesh Kadam",
+        role: "Kadam Supermarket, Pune"
+      }
+    ];
+
+    let revIdx = 0;
+    const quoteEl = document.getElementById('review-quote-text');
+    const authorEl = document.getElementById('review-author');
+    const roleEl = document.getElementById('review-role');
+    const numEl = document.getElementById('review-idx-num');
+    const ghostEl = document.getElementById('review-ghost-text');
+
+    function updateReview(newIdx) {
+      revIdx = (newIdx + REVIEWS.length) % REVIEWS.length;
+      quoteEl.style.opacity = '0';
+      quoteEl.style.transform = 'translateY(10px)';
+
+      setTimeout(() => {
+        const item = REVIEWS[revIdx];
+        const nextItem = REVIEWS[(revIdx + 1) % REVIEWS.length];
+        quoteEl.textContent = item.quote;
+        authorEl.textContent = item.author;
+        roleEl.textContent = item.role;
+        numEl.textContent = '0' + (revIdx + 1);
+        ghostEl.textContent = nextItem.quote;
+
+        quoteEl.style.opacity = '1';
+        quoteEl.style.transform = 'translateY(0)';
+      }, 450);
+    }
+
+    document.getElementById('review-next').addEventListener('click', () => updateReview(revIdx + 1));
+    document.getElementById('review-prev').addEventListener('click', () => updateReview(revIdx - 1));
+
+    // ------------------------------------------------------------------------
+    // 4. INTERSECTION OBSERVER REVEAL (.rv)
+    // ------------------------------------------------------------------------
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.rv').forEach(el => observer.observe(el));
+
+    // ------------------------------------------------------------------------
+    // 5. LAUNCH TEAMMATE APP (Redirect / Launch into Tara flow)
+    // ------------------------------------------------------------------------
+    window.launchTeammateApp = function() {
+      // Directs to the merchant dashboard / onboarding login
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'LAUNCH_TARA' }, '*');
+      } else {
+        window.location.href = '/?mode=onboarding';
+      }
+    };
+  </script>
+</body>
+</html>
