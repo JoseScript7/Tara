@@ -1,0 +1,182 @@
+{
+  "version": "3.0.0",
+  "generatedAt": "2026-10-31T06:47:57.411Z",
+  "assets": {
+    "IMG-1": {
+      "id": "IMG-1",
+      "slug": "img-1-welcome-hero",
+      "title": "Kirana Store Counter Hero",
+      "alt": "Neighborhood kirana shop counter in warm golden-hour light with a payment soundbox and QR stand beside a steel scale",
+      "credit": "Tara Synthetic Asset Library (Golden Hour Kirana Series)",
+      "aspectRatio": "2:3",
+      "prompt": "A neighborhood grocery (kirana) shop counter in golden-hour light: a small speaker-style payment soundbox and a QR stand beside a steel scale, jars on shelves behind, a hand resting on the counter (no face)",
+      "isUserSupplied": false,
+      "avif": {
+        "400": "/assets/optimized/img-1-welcome-hero-400.avif",
+        "800": "/assets/optimized/img-1-welcome-hero-800.avif",
+        "1200": "/assets/optimized/img-1-welcome-hero-1200.avif"
+      },
+      "webp": {
+        "400": "/assets/optimized/img-1-welcome-hero-400.webp",
+        "800": "/assets/optimized/img-1-welcome-hero-800.webp",
+        "1200": "/assets/optimized/img-1-welcome-hero-1200.webp"
+      },
+      "widths": [
+        400,
+        800,
+        1200
+      ],
+      "fallback": "/assets/optimized/img-1-welcome-hero-800.webp"
+    },
+    "IMG-2": {
+      "id": "IMG-2",
+      "slug": "img-2-tea-stall",
+      "title": "Roadside Tea Stall at Dusk",
+      "alt": "Roadside tea stall counter at dusk with steam gently rising from a brass kettle, glass tumblers, and a small QR stand",
+      "credit": "Tara Synthetic Asset Library (Tea Stall Series)",
+      "aspectRatio": "16:9",
+      "prompt": "A roadside tea stall at dusk: steam rising from a kettle, glass tumblers, a small QR stand on the counter",
+      "isUserSupplied": false,
+      "avif": {
+        "400": "/assets/optimized/img-2-tea-stall-400.avif",
+        "800": "/assets/optimized/img-2-tea-stall-800.avif",
+        "1200": "/assets/optimized/img-2-tea-stall-1200.avif"
+      },
+      "webp": {
+        "400": "/assets/optimized/img-2-tea-stall-400.webp",
+        "800": "/assets/optimized/img-2-tea-stall-800.webp",
+        "1200": "/assets/optimized/img-2-tea-stall-1200.webp"
+      },
+      "widths": [
+        400,
+        800,
+        1200
+      ],
+      "fallback": "/assets/optimized/img-2-tea-stall-800.webp"
+    },
+    "IMG-3": {
+      "id": "IMG-3",
+      "slug": "img-3-pharmacy",
+      "title": "Neighborhood Pharmacy Counter",
+      "alt": "Clean pharmacy counter in soft morning light with shelves of medicine boxes with blank labels and a payment card machine",
+      "credit": "Tara Synthetic Asset Library (Healthcare Retail Series)",
+      "aspectRatio": "16:9",
+      "prompt": "A small pharmacy counter in soft morning light: shelves of boxes with blank labels, a card machine on the counter",
+      "isUserSupplied": false,
+      "avif": {
+        "400": "/assets/optimized/img-3-pharmacy-400.avif",
+        "800": "/assets/optimized/img-3-pharmacy-800.avif",
+        "1200": "/assets/optimized/img-3-pharmacy-1200.avif"
+      },
+      "webp": {
+        "400": "/assets/optimized/img-3-pharmacy-400.webp",
+        "800": "/assets/optimized/img-3-pharmacy-800.webp",
+        "1200": "/assets/optimized/img-3-pharmacy-1200.webp"
+      },
+      "widths": [
+        400,
+        800,
+        1200
+      ],
+      "fallback": "/assets/optimized/img-3-pharmacy-800.webp"
+    },
+    "IMG-4": {
+      "id": "IMG-4",
+      "slug": "img-4-cafe",
+      "title": "Small Café Counter",
+      "alt": "Warm café counter in evening light with an espresso machine and a handheld payment terminal",
+      "credit": "Tara Synthetic Asset Library (Artisan Cafe Series)",
+      "aspectRatio": "16:9",
+      "prompt": "A small café counter in evening light: espresso machine, a handheld card terminal, warm bulbs",
+      "isUserSupplied": false,
+      "avif": {
+        "400": "/assets/optimized/img-4-cafe-400.avif",
+        "800": "/assets/optimized/img-4-cafe-800.avif",
+        "1200": "/assets/optimized/img-4-cafe-1200.avif"
+      },
+      "webp": {
+        "400": "/assets/optimized/img-4-cafe-400.webp",
+        "800": "/assets/optimized/img-4-cafe-800.webp",
+        "1200": "/assets/optimized/img-4-cafe-1200.webp"
+      },
+      "widths": [
+        400,
+        800,
+        1200
+      ],
+      "fallback": "/assets/optimized/img-4-cafe-800.webp"
+    },
+    "IMG-5": {
+      "id": "IMG-5",
+      "slug": "img-5-technician",
+      "title": "Device Replacement & Field Visit",
+      "alt": "Technician hands gently holding a compact payment terminal with a screwdriver and charging cable on a wooden surface",
+      "credit": "Tara Synthetic Asset Library (Field Operations Series)",
+      "aspectRatio": "16:9",
+      "prompt": "A technician hands holding a small payment device, a screwdriver and a charger cable on a wooden counter",
+      "isUserSupplied": false,
+      "avif": {
+        "400": "/assets/optimized/img-5-technician-400.avif",
+        "800": "/assets/optimized/img-5-technician-800.avif",
+        "1200": "/assets/optimized/img-5-technician-1200.avif"
+      },
+      "webp": {
+        "400": "/assets/optimized/img-5-technician-400.webp",
+        "800": "/assets/optimized/img-5-technician-800.webp",
+        "1200": "/assets/optimized/img-5-technician-1200.webp"
+      },
+      "widths": [
+        400,
+        800,
+        1200
+      ],
+      "fallback": "/assets/optimized/img-5-technician-800.webp"
+    },
+    "IMG-6": {
+      "id": "IMG-6",
+      "slug": "img-6-qr-pairing",
+      "title": "Phone QR Pairing Step",
+      "alt": "Hands holding a smartphone aiming the camera toward a payment QR sticker on a counter with blurred background",
+      "credit": "Tara Synthetic Asset Library (Onboarding Series)",
+      "aspectRatio": "16:9",
+      "prompt": "A phone held toward a QR sticker on a shop counter, only hands and the phone visible, blurred shop behind",
+      "isUserSupplied": false,
+      "avif": {
+        "400": "/assets/optimized/img-6-qr-pairing-400.avif",
+        "800": "/assets/optimized/img-6-qr-pairing-800.avif",
+        "1200": "/assets/optimized/img-6-qr-pairing-1200.avif"
+      },
+      "webp": {
+        "400": "/assets/optimized/img-6-qr-pairing-400.webp",
+        "800": "/assets/optimized/img-6-qr-pairing-800.webp",
+        "1200": "/assets/optimized/img-6-qr-pairing-1200.webp"
+      },
+      "widths": [
+        400,
+        800,
+        1200
+      ],
+      "fallback": "/assets/optimized/img-6-qr-pairing-800.webp"
+    }
+  },
+  "videoLoops": {
+    "HERO_LOOP": {
+      "mp4": "/assets/optimized/hero-loop.mp4",
+      "webm": "/assets/optimized/hero-loop.webm",
+      "poster": "/assets/optimized/hero-poster.webp",
+      "durationSeconds": 4,
+      "mp4SizeBytes": 155509,
+      "webmSizeBytes": 33469
+    }
+  },
+  "performanceBudgets": {
+    "heroImageMaxKb": 150,
+    "heroVideoMaxKb": 600,
+    "totalAssetsMaxKb": 1500
+  },
+  "actualMeasurements": {
+    "heroAvif800Kb": 11,
+    "heroMp4Kb": 152,
+    "totalOptimizedAssetsKb": 809
+  }
+}

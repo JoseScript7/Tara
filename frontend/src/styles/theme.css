@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  /* Nuvo Coastal Cliffs Palette mapped to core app tokens */
+  --color-paytm-blue: #FA7F62;      /* Nuvo Coral CTA */
+  --color-cyan-accent: #FE8A70;     /* Nuvo Coral Card Accent */
+  --color-navy: #151615;            /* Nuvo Ink (17.2:1 contrast) */
+  --color-light-bg: #F8E6DD;        /* Nuvo Pale Peach Ground */
+  --color-white-panel: #FAF9F5;     /* Nuvo Warm White Panel */
+  --color-soft-border: rgba(21, 22, 21, 0.08); /* Nuvo Soft Warm Border */
+  
+  /* Additional Nuvo Design Tokens */
+  --color-coral: #FE8A70;
+  --color-coral-cta: #FA7F62;
+  --color-coral-cta-hover: #F26A4A;
+  --color-dark-card: #2C3426;
+  --color-chip: #EFF2E9;
+  --color-ink: #151615;
+  --color-ink-soft: #5E625A;
+  --color-muted: #C3C4C1;
+  --color-ground: #F8E6DD;
+  --color-panel: #FAF9F5;
+}
+
+body {
+  background-color: #F8E6DD;
+  color: #151615;
+  font-family: var(--font-ui, "Instrument Sans", system-ui, -apple-system, sans-serif);
+  -webkit-font-smoothing: antialiased;
+}
