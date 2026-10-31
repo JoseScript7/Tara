@@ -1,0 +1,797 @@
+/* ==========================================================================
+   TARA WELCOME HERO (Adapted Nuvo Split Hero)
+   Meets WCAG 2.1 AA across all supported scripts (EN, HI, TA, TE, BN, MR).
+   ========================================================================== */
+
+.tara-welcome-page {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--color-ground);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: var(--font-ui);
+  color: var(--color-ink);
+}
+
+/* Outer layout container */
+.tara-welcome-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: var(--space-4);
+}
+
+@media (min-width: 900px) {
+  .tara-welcome-container {
+    padding: var(--space-6);
+    flex-direction: row;
+    gap: var(--space-6);
+    min-height: calc(100vh - 2 * var(--space-6));
+    align-items: stretch;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   LEFT PANEL (Photo + ambient video + 3 floating cards)
+   Desktop: ~46% width, rounded 32px
+   Mobile: stacks below right column (order 2)
+   -------------------------------------------------------------------------- */
+.tara-welcome-left {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  box-sizing: border-box;
+  background-color: var(--color-panel);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
+  order: 2; /* Mobile: stacks below right column */
+}
+
+@media (min-width: 900px) {
+  .tara-welcome-left {
+    flex: 0 0 46%;
+    max-width: 46%;
+    order: 1; /* Desktop: left */
+    min-height: 640px;
+  }
+}
+
+/* Photo & Video background layer */
+.tara-welcome-media-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.tara-welcome-media-wrap img,
+.tara-welcome-media-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Ambient subtle warm gradient vignette over media */
+.tara-welcome-media-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(21, 22, 21, 0.15) 0%,
+    rgba(21, 22, 21, 0.05) 40%,
+    rgba(21, 22, 21, 0.45) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Faint dust / texture specks */
+.tara-welcome-dust {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Left panel content container (cards & corner text) */
+.tara-welcome-left-content {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  padding: var(--space-6);
+  height: 100%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+/* Corner text: "Hi, I'm" / "Tara." positioned at bottom-left */
+.tara-welcome-corner-text {
+  position: absolute;
+  bottom: 28px;
+  left: 32px;
+  z-index: 12;
+  color: #FFFFFF;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+.tara-welcome-corner-intro {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.01em;
+  opacity: 0.95;
+  line-height: 1.1;
+}
+
+.tara-welcome-corner-name {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: var(--weight-bold);
+  line-height: 1;
+}
+
+/* Accent font for Latin, upright for Indic */
+.tara-welcome-accent-latin {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+}
+
+.tara-welcome-accent-indic {
+  font-weight: var(--weight-bold);
+  font-style: normal;
+  color: #FFE6DF;
+}
+
+/* Floating Cards Stack (with soft depth and organic rotation) */
+.tara-welcome-cards-stack {
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+  pointer-events: none;
+}
+
+/* Sample Badge on Cards */
+.tara-card-sample-badge {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: #1e293b;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.tara-card-badge-dark {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #E2E8F0;
+  box-shadow: none;
+}
+
+/* Card Common Components */
+.tara-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.tara-card-title {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: #334155;
+  letter-spacing: 0.01em;
+}
+
+.tara-card-section-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Card 1: Warm Sunset Frosted Glass settlement card */
+.tara-card-coral {
+  position: absolute;
+  top: 10%;
+  left: 7%;
+  width: 84%;
+  max-width: 330px;
+  background: linear-gradient(135deg, rgba(255, 245, 238, 0.88) 0%, rgba(255, 228, 218, 0.72) 100%);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  color: #0f172a;
+  border-radius: 20px;
+  padding: 16px 20px 18px 20px;
+  box-shadow: 
+    0 20px 45px rgba(220, 80, 45, 0.16),
+    0 6px 16px rgba(0, 0, 0, 0.06),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px rgba(255, 160, 130, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  transform: rotate(-0.75deg);
+  pointer-events: auto;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.tara-card-coral:hover {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow: 
+    0 26px 52px rgba(220, 80, 45, 0.22),
+    0 8px 20px rgba(0, 0, 0, 0.08),
+    inset 0 1px 2px rgba(255, 255, 255, 1);
+}
+
+.tara-card-settlement-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+.tara-card-amount {
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.tara-card-settled-chip {
+  background: rgba(16, 185, 129, 0.14);
+  color: #065F46;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tara-card-chip-icon {
+  font-size: 0.75rem;
+}
+
+.tara-card-link-action {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: #C2410C;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s ease;
+}
+
+.tara-card-link-action:hover {
+  color: #9A3412;
+}
+
+.tara-card-link-arrow {
+  transition: transform 0.2s ease;
+}
+
+.tara-card-coral:hover .tara-card-link-arrow {
+  transform: translateX(3px);
+}
+
+/* Card 2: Crystalline Ocean-Frosted Glass Explainer card */
+.tara-card-glass {
+  position: absolute;
+  top: 36%;
+  left: 12%;
+  width: 84%;
+  max-width: 350px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.90) 0%, rgba(248, 250, 252, 0.76) 100%);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 18px 20px;
+  color: #0f172a;
+  box-shadow: 
+    0 24px 48px rgba(15, 30, 20, 0.16),
+    0 8px 18px rgba(0, 0, 0, 0.05),
+    inset 0 1px 2px rgba(255, 255, 255, 1);
+  transform: rotate(0.6deg);
+  pointer-events: auto;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.tara-card-glass:hover {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow: 
+    0 28px 56px rgba(15, 30, 20, 0.22),
+    0 10px 22px rgba(0, 0, 0, 0.08),
+    inset 0 1px 2px rgba(255, 255, 255, 1);
+}
+
+.tara-card-work-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 14px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tara-card-work-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: #1e293b;
+  line-height: 1.35;
+}
+
+.tara-card-check-icon {
+  color: #059669;
+  flex-shrink: 0;
+}
+
+.tara-card-explain-btn {
+  background: rgba(235, 94, 65, 0.08);
+  border: 1px solid rgba(235, 94, 65, 0.22);
+  border-radius: var(--radius-full);
+  padding: 5px 12px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: #C2410C;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.tara-card-explain-btn:hover {
+  background: rgba(235, 94, 65, 0.14);
+  color: #9A3412;
+  transform: translateX(2px);
+}
+
+.tara-card-btn-chevron {
+  transition: transform 0.2s ease;
+}
+
+.tara-card-explain-btn:hover .tara-card-btn-chevron {
+  transform: translateX(2px);
+}
+
+/* Card 3: Obsidian Coastal Glass Card */
+.tara-card-dark {
+  position: absolute;
+  top: 65%;
+  left: 8%;
+  width: 82%;
+  max-width: 330px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.84) 0%, rgba(20, 30, 45, 0.74) 100%);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  color: #F8FAFC;
+  border-radius: 18px;
+  padding: 12px 18px;
+  box-shadow: 
+    0 20px 42px rgba(0, 0, 0, 0.4),
+    0 6px 14px rgba(0, 0, 0, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  transform: rotate(-0.3deg);
+  pointer-events: auto;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.tara-card-dark:hover {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow: 
+    0 24px 50px rgba(0, 0, 0, 0.5),
+    0 8px 18px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35);
+}
+
+.tara-card-dark-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tara-card-avatar-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.tara-card-online-dot {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 8px;
+  height: 8px;
+  background-color: #10B981;
+  border: 1.5px solid #0f172a;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #10B981;
+}
+
+.tara-card-dark-title {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: #F8FAFC;
+  letter-spacing: 0.01em;
+}
+
+.tara-card-dark-subtitle {
+  font-size: 0.6875rem;
+  color: #94A3B8;
+  font-weight: 400;
+  margin-top: 1px;
+}
+
+/* --------------------------------------------------------------------------
+   RIGHT COLUMN (Header, 3-line headline, lede, centered CTA, 2 facts)
+   Desktop: ~54% width, rounded 32px
+   Mobile: stacks above photo panel (order 1)
+   -------------------------------------------------------------------------- */
+.tara-welcome-right {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-panel);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5);
+  order: 1; /* Mobile: comes first */
+}
+
+@media (min-width: 900px) {
+  .tara-welcome-right {
+    flex: 1;
+    order: 2; /* Desktop: right */
+    padding: var(--space-8);
+  }
+}
+
+/* Header bar */
+.tara-welcome-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 48px;
+  gap: var(--space-2);
+  box-sizing: border-box;
+}
+
+.tara-welcome-menu-btn {
+  background: transparent;
+  border: 1px solid var(--color-panel-border);
+  border-radius: var(--radius-full);
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: background-color var(--duration-fast);
+}
+
+.tara-welcome-menu-btn:hover {
+  background-color: rgba(21, 22, 21, 0.05);
+}
+
+.tara-welcome-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-ink);
+  letter-spacing: -0.02em;
+}
+
+.tara-welcome-brand-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-cta);
+  display: inline-block;
+}
+
+/* Language selector */
+.tara-lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: var(--color-panel-card);
+  border: 1px solid var(--color-panel-border);
+  border-radius: var(--radius-full);
+  padding: 2px 4px;
+}
+
+.tara-lang-btn {
+  background: transparent;
+  border: none;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  padding: 6px 10px;
+  min-height: 36px;
+  border-radius: var(--radius-full);
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  white-space: nowrap;
+}
+
+.tara-lang-btn.active {
+  background: var(--color-ink);
+  color: #FFFFFF;
+  font-weight: var(--weight-semibold);
+}
+
+/* Main hero body */
+.tara-welcome-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  max-width: 620px;
+  margin: var(--space-8) auto;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* 3-line Headline */
+.tara-welcome-headline {
+  margin: 0;
+  font-size: clamp(2.5rem, 4.8vw, 4.25rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: var(--color-ink);
+  word-break: normal;
+}
+
+.tara-welcome-headline-line {
+  display: block;
+}
+
+.tara-welcome-headline-serif {
+  font-family: var(--font-serif, "Instrument Serif", Georgia, serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+/* Lede */
+.tara-welcome-lede {
+  margin: var(--space-5) auto var(--space-8);
+  font-size: 1.125rem;
+  line-height: 1.5;
+  color: var(--color-ink-soft);
+  max-width: 520px;
+  word-break: normal;
+}
+
+@media (min-width: 600px) {
+  .tara-welcome-lede {
+    font-size: 1.1875rem;
+  }
+}
+
+/* Centered CTA with Arrow */
+.tara-welcome-cta-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.tara-welcome-cta-btn {
+  background-color: var(--color-cta);
+  color: var(--color-cta-text);
+  font-size: 1rem;
+  font-weight: 600;
+  min-height: 52px;
+  min-width: 180px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  box-shadow: 0 6px 20px rgba(250, 127, 98, 0.35);
+  transition: transform var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.tara-welcome-cta-btn:hover {
+  background-color: var(--color-cta-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(250, 127, 98, 0.45);
+}
+
+.tara-welcome-cta-btn:active {
+  transform: translateY(0);
+}
+
+.tara-welcome-cta-arrow {
+  width: 32px;
+  height: 32px;
+  background-color: var(--color-dark-card);
+  color: var(--color-dark-card-text);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.tara-welcome-cta-btn:hover .tara-welcome-cta-arrow {
+  transform: translateX(3px);
+}
+
+/* Bottom 2 Truthful Facts */
+.tara-welcome-facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-panel-border);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .tara-welcome-facts {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.tara-welcome-fact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-ink-soft);
+  line-height: var(--leading-normal);
+  flex: 1;
+  word-break: break-word;
+}
+
+.tara-welcome-fact-icon {
+  color: var(--color-coral-deep);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   ENTRANCE MOTION (One timeline, disabled for prefers-reduced-motion)
+   -------------------------------------------------------------------------- */
+@keyframes taraFadeWipeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes taraCardFloatIn {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tara-anim-header {
+    animation: taraFadeWipeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .tara-anim-line-1 {
+    animation: taraFadeWipeUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  }
+  .tara-anim-line-2 {
+    animation: taraFadeWipeUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+  }
+  .tara-anim-line-3 {
+    animation: taraFadeWipeUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both;
+  }
+  .tara-anim-lede {
+    animation: taraFadeWipeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.34s both;
+  }
+  .tara-anim-cta {
+    animation: taraFadeWipeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both;
+  }
+  .tara-anim-card-1 {
+    animation: taraCardFloatIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+  }
+  .tara-anim-card-2 {
+    animation: taraCardFloatIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.32s both;
+  }
+  .tara-anim-card-3 {
+    animation: taraCardFloatIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.44s both;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE ADJUSTMENTS FOR MOBILE FLOATING CARDS
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .tara-card-coral {
+    top: 8%;
+    left: 6%;
+    width: 88%;
+    max-width: 310px;
+    padding: 14px 16px 16px 16px;
+  }
+  .tara-card-amount {
+    font-size: 1.625rem;
+  }
+  .tara-card-glass {
+    top: 34%;
+    left: 9%;
+    width: 86%;
+    max-width: 320px;
+    padding: 14px 16px;
+  }
+  .tara-card-dark {
+    top: 66%;
+    left: 6%;
+    width: 88%;
+    max-width: 310px;
+    padding: 10px 14px;
+  }
+  .tara-welcome-corner-text {
+    bottom: 20px;
+    left: 20px;
+  }
+}
+
