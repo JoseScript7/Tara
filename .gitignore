@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+*.sqlite3
+.pytest_cache/
+.coverage
+htmlcov/
+frontend/test-results/
+frontend/pw_out*.txt
+backend/logs/
+.DS_Store
