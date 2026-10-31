@@ -14,4 +14,6 @@ htmlcov/
 frontend/test-results/
 frontend/pw_out*.txt
 backend/logs/
+.terraform/
+*.tfstate*
 .DS_Store
